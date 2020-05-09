@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SettingsActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="#E6E6E6">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/head">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imag_head"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:paddingTop="10dp"
+                android:layout_below="@id/imag_head"
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/intoMyPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:text="查看个人主页 >"
+                android:paddingTop="10dp"
+                android:layout_below="@id/username"
+                android:layout_centerHorizontal="true"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/head"
+            >
+            <LinearLayout
+                android:id="@+id/star"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_star"
+                    android:src="@drawable/icon_star"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tv_star"
+                    android:text="收藏"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/load"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_load"
+                    android:src="@drawable/icon_load"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tv_load"
+                    android:text="缓存"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/btn_my_follow"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="我的关注"
+                android:background="#F0F5FD"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:paddingTop="15dp"/>
+            <Button
+                android:id="@+id/btn_history"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="观看记录"
+                android:background="#D3E2F8"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:layout_marginTop="15dp"/>
+            <Button
+                android:id="@+id/btn_my_badge"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="我的徽章"
+                android:background="#B5CEF4"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:layout_marginTop="15dp"/>
+            <Button
+                android:id="@+id/btn_set_notification"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="通知设置"
+                android:background="#7AA7EB"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:layout_marginTop="15dp"/>
+            <Button
+                android:id="@+id/btn_writer"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="成为作者"
+                android:background="#4E8AE4"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:layout_marginTop="15dp"/>
+
+
+            <Button
+                android:id="@+id/btn_offline"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:text="退出登录"
+                android:background="#226DDD"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:layout_marginTop="15dp"/>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VERSION: 1.0"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

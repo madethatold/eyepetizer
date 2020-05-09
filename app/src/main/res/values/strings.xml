@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">eyePetizer</string>
+    <string name="registerText">登录后即可关注作者\n发表评论，同步喜欢视频和播放记录</string>
+</resources>
