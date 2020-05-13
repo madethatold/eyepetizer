@@ -6,28 +6,36 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.example.eyepetizer.adapter.DailyAdapter;
 import com.example.eyepetizer.databinding.FragmentDailyBinding;
 import com.example.eyepetizer.model.DailyModel;
+import com.example.eyepetizer.networks.API;
+import com.example.eyepetizer.util.StringConverter;
 import com.example.eyepetizer.util.ToastUtil;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class DailyFragment extends Fragment {
+    private static String TAG="TAG";
     private FragmentDailyBinding binding;
-    private RequestQueue queue;
-    private List<DailyModel.itemEntity> dataList;
+    private List<DailyModel.itemEntity.DataEntity> dataList=new ArrayList<>();
+    private List<DailyModel.itemEntity> itemEntities=new ArrayList<>();
     private String nextUrl;
 
     @Nullable
@@ -35,6 +43,7 @@ public class DailyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding=FragmentDailyBinding.inflate(getLayoutInflater());
         initview();
+        downLoad(API.DAILY);
         return binding.getRoot();
     }
 
@@ -51,33 +60,61 @@ public class DailyFragment extends Fragment {
             }
         });
 
+        //为recyclerView设置Adapter
+        binding.rvDaily.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        DailyAdapter adapter=new DailyAdapter(itemEntities,dataList);
+        binding.rvDaily.setAdapter(adapter);
     }
 
-
-    private void  downLoad(String url) {
-        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
-
-            private Gson gson;
+    //网络请求
+    private void  downLoad(final String url) {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(String response) {
-                DailyModel dailyModel=gson.fromJson(response,DailyModel.class);
-                List<DailyModel.itemEntity> itemEntities=dailyModel.getLists();
-                DailyModel.itemEntity itemEntity=itemEntities.get(0);
-                dataList.removeAll(dataList);
-                dataList.addAll(itemEntities);
-                nextUrl=dailyModel.getNextPageUrl();
+            public void run() {
+                try {
 
+                    OkHttpClient client=new OkHttpClient();
+                    Request request=new Request.Builder()
+                            .url(url)
+                            .build();
+                    Response response=client.newCall(request).execute();
+                    String responseData=response.body().string();
+                    parseJSONWithGSON(responseData);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("===>" , "===获取数据失败===>");
-
-            }
-        });
-
-        queue.add(request);
-        queue.start();
+        }).start();
     }
+
+    //json转换为实体类
+    private void parseJSONWithGSON(String jsonData){
+        Gson gson=new Gson();
+
+        DailyModel dailyModel=gson.fromJson(jsonData,DailyModel.class);
+        nextUrl=dailyModel.getNextPageUrl();
+
+        //itemEntities初始化
+        itemEntities=dailyModel.getLists();
+
+        //移除精选
+        itemEntities.remove(0);
+        for (int i=0;i<itemEntities.size();i++){
+            if (itemEntities.get(i).getType().equals("pictureFollowCard")){
+                itemEntities.remove(i);
+            }
+        }
+        itemEntities.remove(0);
+
+
+        //dataList初始化
+        for (DailyModel.itemEntity entity: itemEntities){
+            dataList.add(entity.getDataEntity());
+        }
+//        for (DailyModel.itemEntity.DataEntity entity:dataList ){
+//            Log.d(TAG, "parseJSONWithGSON: "+entity.getDataType());
+//        }
+    }
+
 
 }

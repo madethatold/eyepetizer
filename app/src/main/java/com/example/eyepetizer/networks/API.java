@@ -11,5 +11,5 @@ public interface API {
     public static final String NOMINATE="http://baobab.kaiyanapp.com/api/v5/index/tab/allRec";
 
     //首页-发现
-    public static final String DISCOVER="http://baobab.kaiyanapp.com/api/v7/index/tab/discover";
+    public static final String DISCOVER="http://baobab.kaiyanapp.com/api/v7/index/tab/discovery";
 }

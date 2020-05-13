@@ -1,6 +1,106 @@
 package com.example.eyepetizer.fragment;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.eyepetizer.adapter.FindMoreAdapter;
+import com.example.eyepetizer.databinding.FragmentDiscoverBinding;
+import com.example.eyepetizer.model.FindMoreModel;
+import com.example.eyepetizer.networks.API;
+import com.example.eyepetizer.util.ToastUtil;
+import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
+
+    private static String TAG="_______________________";
+    private FragmentDiscoverBinding binding;
+    private List<FindMoreModel.ItemListBeanX> itemListBeanXList=new ArrayList<>();
+    private List<FindMoreModel.ItemListBeanX.DataBeanX> dataBeanXList=new ArrayList<>();
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding=FragmentDiscoverBinding.inflate(getLayoutInflater());
+        initview();
+        downLoad(API.DISCOVER);
+        Log.d(TAG, "onCreateView: "+API.DISCOVER);
+        return binding.getRoot();
+    }
+
+    private void initview(){
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                ToastUtil.showMsg(getContext(),"test");
+            }
+        });
+
+        //为recyclerView设置Adapter
+        binding.rvFindMore.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        FindMoreAdapter adapter=new FindMoreAdapter(itemListBeanXList,dataBeanXList);
+        binding.rvFindMore.setAdapter(adapter);
+    }
+
+    //网络请求
+    private void  downLoad(final String url) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    OkHttpClient client=new OkHttpClient();
+                    Request request=new Request.Builder()
+                            .url(url)
+                            .build();
+                    Response response=client.newCall(request).execute();
+                    String responseData=response.body().string();
+                    parseJSONWithGSON(responseData);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //json转换为实体类
+    private void parseJSONWithGSON(String jsonData){
+        Gson gson=new Gson();
+        FindMoreModel findMoreModel=gson.fromJson(jsonData,FindMoreModel.class);
+        //list初始化
+        itemListBeanXList=findMoreModel.getItemList();
+        for (int i=0;i<itemListBeanXList.size();i++){
+            if (itemListBeanXList.get(i).getType().equals("textCard")){
+                if (itemListBeanXList.get(i).getData().getText().equals("查看全部分类")){
+                    itemListBeanXList.remove(i);
+                }
+            }
+        }
+//        Log.d(TAG, "parseJSONWithGSON: "+itemListBeanXList.get(0).getType());
+//        for (FindMoreModel.ItemListBeanX itemListBeanX:itemListBeanXList){
+//            Log.d(TAG, "parseJSONWithGSON: "+itemListBeanX.getType());
+//        }
+        //dataBeanList初始化
+        for (FindMoreModel.ItemListBeanX itemListBeanX:itemListBeanXList){
+            dataBeanXList.add(itemListBeanX.getData());
+        }
+        Log.d(TAG, "parseJSONWithGSON: "+dataBeanXList.get(0).getDataType());
+    }
 }

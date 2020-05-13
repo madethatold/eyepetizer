@@ -1,10 +1,14 @@
 package com.example.eyepetizer.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class DailyModel {
     private String nextPageUrl;
     private int count;
+
+    @SerializedName("itemList")
     private List<itemEntity> lists;
 
     public String getNextPageUrl() {
@@ -31,9 +35,13 @@ public class DailyModel {
         this.lists = lists;
     }
 
-    public class itemEntity{
+
+    public static class itemEntity{
         private String type;
         private int id;
+
+        @SerializedName("data")
+        private DataEntity dataEntity;
 
         public String getType() {
             return type;
@@ -51,9 +59,37 @@ public class DailyModel {
             this.id = id;
         }
 
-        public class DataEntity{
+        public DataEntity getDataEntity() {
+            return dataEntity;
+        }
+
+        public void setDataEntity(DataEntity dataEntity) {
+            this.dataEntity = dataEntity;
+        }
+
+        public static class DataEntity{
             private String dataType;
             private String text;
+            @SerializedName("header")
+            private Header header;
+            @SerializedName("content")
+            private Content content;
+
+            public Header getHeader() {
+                return header;
+            }
+
+            public void setHeader(Header header) {
+                this.header = header;
+            }
+
+            public Content getContent() {
+                return content;
+            }
+
+            public void setContent(Content content) {
+                this.content = content;
+            }
 
             public String getDataType() {
                 return dataType;
@@ -71,7 +107,7 @@ public class DailyModel {
                 this.text = text;
             }
 
-            public class header{
+            public class Header{
                 private int id;
                 private String actionUrl;
                 private String icon;
@@ -165,9 +201,19 @@ public class DailyModel {
                 }
             }
 
-            public class content{
+            public class Content{
                 private int id;
                 private String type;
+                @SerializedName("data")
+                private Data data;
+
+                public Data getData() {
+                    return data;
+                }
+
+                public void setData(Data data) {
+                    this.data = data;
+                }
 
                 public int getId() {
                     return id;
@@ -185,13 +231,32 @@ public class DailyModel {
                     this.type = type;
                 }
 
-                public class data{
+                public class Data{
                     private String dataType;
                     private int id;
                     private String title;
                     private String description;
                     private String url;
                     private String playUrl;
+                    private String category;
+                    @SerializedName("cover")
+                    private CoverBean coverBean;
+
+                    public CoverBean getCoverBean() {
+                        return coverBean;
+                    }
+
+                    public void setCoverBean(CoverBean coverBean) {
+                        this.coverBean = coverBean;
+                    }
+
+                    public String getCategory() {
+                        return category;
+                    }
+
+                    public void setCategory(String category) {
+                        this.category = category;
+                    }
 
                     public String getDataType() {
                         return dataType;
@@ -240,6 +305,37 @@ public class DailyModel {
                     public void setPlayUrl(String playUrl) {
                         this.playUrl = playUrl;
                     }
+
+                    public class CoverBean{
+
+                        private String feed;
+                        private String detail;
+                        private String blurred;
+
+                        public String getFeed() {
+                            return feed;
+                        }
+
+                        public void setFeed(String feed) {
+                            this.feed = feed;
+                        }
+
+                        public String getDetail() {
+                            return detail;
+                        }
+
+                        public void setDetail(String detail) {
+                            this.detail = detail;
+                        }
+
+                        public String getBlurred() {
+                            return blurred;
+                        }
+
+                        public void setBlurred(String blurred) {
+                            this.blurred = blurred;
+                        }
+                    }
                 }
             }
 
@@ -247,6 +343,5 @@ public class DailyModel {
 
     }
 
-
-
 }
+
