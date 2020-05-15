@@ -56,7 +56,7 @@ public class DailyFragment extends Fragment {
         binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                ToastUtil.showMsg(getContext(),"test");
+//                downLoad(nextUrl);
             }
         });
 
@@ -98,22 +98,19 @@ public class DailyFragment extends Fragment {
         itemEntities=dailyModel.getLists();
 
         //移除精选
-        itemEntities.remove(0);
-        for (int i=0;i<itemEntities.size();i++){
-            if (itemEntities.get(i).getType().equals("pictureFollowCard")){
-                itemEntities.remove(i);
-            }
-        }
-        itemEntities.remove(0);
+//        itemEntities.remove(0);
+//        for (int i=0;i<itemEntities.size();i++){
+//            if (itemEntities.get(i).getType().equals("pictureFollowCard")){
+//                itemEntities.remove(i);
+//            }
+//        }
+//        itemEntities.remove(0);
 
 
         //dataList初始化
         for (DailyModel.itemEntity entity: itemEntities){
             dataList.add(entity.getDataEntity());
         }
-//        for (DailyModel.itemEntity.DataEntity entity:dataList ){
-//            Log.d(TAG, "parseJSONWithGSON: "+entity.getDataType());
-//        }
     }
 
 

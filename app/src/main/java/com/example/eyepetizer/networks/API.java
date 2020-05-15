@@ -12,4 +12,10 @@ public interface API {
 
     //首页-发现
     public static final String DISCOVER="http://baobab.kaiyanapp.com/api/v7/index/tab/discovery";
+
+    //视频详情页-相关推荐
+    public static final String RELATED="http://baobab.kaiyanapp.com/api/v4/video/related?id=";
+
+    //视频详情页-评论
+    public static final String COMMENT="http://baobab.kaiyanapp.com/api/v2/replies/video?videoId=";
 }

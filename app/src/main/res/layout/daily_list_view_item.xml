@@ -56,6 +56,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/darker_gray"
             android:textSize="11sp"
+            android:ellipsize="end"
+            android:lines="1"
             android:textStyle="bold"
             tools:text="凯拉特  /  #影视" />
     </LinearLayout>
