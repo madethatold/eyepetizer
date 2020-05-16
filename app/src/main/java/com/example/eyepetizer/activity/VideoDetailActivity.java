@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.MediaController;
 
 import com.example.eyepetizer.R;
 import com.example.eyepetizer.adapter.VideoDetailAdapter;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 
 import org.w3c.dom.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -25,13 +27,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class VideoDetailActivity extends AppCompatActivity {
-    private static String TAG="!!!!!!!!!!";
+    private static String TAG="oooooooooooooooooooVideoDetail";
 
     private ActivityVideoDetailBinding binding;
-    List<CommentModel.ItemListBean> commentList;
-    List<CommentModel.ItemListBean.DataBean> commentDataList;
-    List<VideoRalatedModel.ItemListBean> videoList;
-    List<VideoRalatedModel.ItemListBean.DataBean> videoDataList;
+    List<CommentModel.ItemListBean> commentList=new ArrayList<>();
+    List<CommentModel.ItemListBean.DataBean> commentDataList=new ArrayList<>();
+    List<VideoRalatedModel.ItemListBean> videoList=new ArrayList<>();
+    List<VideoRalatedModel.ItemListBean.DataBean> videoDataList=new ArrayList<>();
 
     private String video;
     private String blurred;
@@ -52,21 +54,25 @@ public class VideoDetailActivity extends AppCompatActivity {
         binding=ActivityVideoDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         receive();
-
-        initview();
-
         String commentAPI=API.COMMENT+id+"";
         String videoAPI=API.RELATED+id+"";
-
-        Log.d(TAG, "onCreate: "+commentAPI+"     "+videoAPI);
         downLoad(videoAPI,commentAPI);
+        initview();
+        
 
     }
 
     private void initview(){
-//        binding.rvList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-//        VideoDetailAdapter adapter=new VideoDetailAdapter(videoDataList,commentDataList,head,title,desc,name,collect,share);
-//        binding.rvList.setAdapter(adapter);
+        binding.rvList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        VideoDetailAdapter adapter=new VideoDetailAdapter(videoDataList,commentDataList,head,title,desc,name,collect,share);
+        binding.rvList.setAdapter(adapter);
+        Log.d(TAG, "initview: "+videoDataList.size()+"  "+commentDataList.size());
+
+        binding.videoView.setVideoPath(video);
+        binding.videoView.setMediaController(new MediaController(this));
+        binding.videoView.requestFocus();
+        binding.videoView.start();
+
     }
 
     private void receive(){
@@ -80,6 +86,16 @@ public class VideoDetailActivity extends AppCompatActivity {
         id=getIntent().getIntExtra("id",0);
         collect=getIntent().getIntExtra("collect",0);
         share=getIntent().getIntExtra("share",0);
+
+        Log.d("00000",video);
+        Log.d("00000", blurred);
+        Log.d("00000", id+"");
+        Log.d("00000", head);
+        Log.d("00000", name);
+        Log.d("00000", title);
+        Log.d("00000", desc);
+        Log.d("00000", collect+"");
+        Log.d("00000", share+"");
     }
 
     //网络请求
@@ -110,24 +126,23 @@ public class VideoDetailActivity extends AppCompatActivity {
 
     //json转换为实体类
     private void parseJSONWithGSON(String jsonData1,String jsonData2){
+
         Gson gson=new Gson();
 
         VideoRalatedModel videoRalatedModel=gson.fromJson(jsonData1,VideoRalatedModel.class);
         videoList=videoRalatedModel.getItemList();
-        Log.d(TAG, "parseJSONWithGSON: "+videoList.get(10).getData().getDataType());
-        for (VideoRalatedModel.ItemListBean bean:videoList){
+
+        for (VideoRalatedModel.ItemListBean bean : videoList){
             videoDataList.add(bean.getData());
         }
-//
-//        CommentModel commentModel=gson.fromJson(jsonData2,CommentModel.class);
-//        commentList=commentModel.getItemList();
-//        for (CommentModel.ItemListBean bean:commentList){
-//            if (bean.getData()!=null){
-//                commentDataList.add(bean.getData());
-//            }
-//
-//        }
-//        Log.d(TAG, "parseJSONWithGSON: "+commentDataList.get(0).getDataType());
+
+        CommentModel commentModel=gson.fromJson(jsonData2,CommentModel.class);
+        commentList=commentModel.getItemList();
+        for (CommentModel.ItemListBean bean:commentList){
+            commentDataList.add(bean.getData());
+        }
+
+        Log.d(TAG, "parseJSONWithGSON: "+commentDataList.size()+"   "+videoDataList.size());
     }
 
 }

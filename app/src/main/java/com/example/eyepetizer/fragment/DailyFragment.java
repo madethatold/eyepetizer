@@ -32,7 +32,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class DailyFragment extends Fragment {
-    private static String TAG="TAG";
+    private static String TAG=".....................Daily";
     private FragmentDailyBinding binding;
     private List<DailyModel.itemEntity.DataEntity> dataList=new ArrayList<>();
     private List<DailyModel.itemEntity> itemEntities=new ArrayList<>();
@@ -42,8 +42,9 @@ public class DailyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding=FragmentDailyBinding.inflate(getLayoutInflater());
-        initview();
         downLoad(API.DAILY);
+        initview();
+
         return binding.getRoot();
     }
 
@@ -64,6 +65,8 @@ public class DailyFragment extends Fragment {
         binding.rvDaily.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         DailyAdapter adapter=new DailyAdapter(itemEntities,dataList);
         binding.rvDaily.setAdapter(adapter);
+
+        Log.d(TAG, "initview: "+itemEntities.size()+"      "+dataList.size());
     }
 
     //网络请求

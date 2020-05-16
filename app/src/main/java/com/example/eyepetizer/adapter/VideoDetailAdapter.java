@@ -139,50 +139,57 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        VideoRalatedModel.ItemListBean.DataBean dataVBean=videoList.get(position-1);
-        CommentModel.ItemListBean.DataBean dataCBean=commentList.get(position-1-videoList.size());
-        if (getItemViewType(position)==TITLE){
-            if(position>videoList.size()+1){
-                ((TitleHolder)holder).tv.setText(dataCBean.getText());
-            }else {
-                ((TitleHolder)holder).tv.setText(dataVBean.getText());
-            }
-        }else if(getItemViewType(position)==VIDEO){
-            ((VideoHolder)holder).tvTitle.setText(dataVBean.getTitle());
-            ((VideoHolder)holder).tvDescription.setText(dataVBean.getDescription());
-            int minutes = dataVBean.getDuration() / 60;
-            int remainingSeconds = dataVBean.getDuration() % 60;
-            ((VideoHolder)holder).tvTime.setText(minutes+":"+remainingSeconds);
-            Glide.with(context).load(dataVBean.getCover().getFeed()).into(((VideoHolder)holder).iv);
-
-        }else if(getItemViewType(position)==REPLY){
-            ((ReplyHolder)holder).tvTime.setText(dataCBean.getCreateTime()+"");
-            ((ReplyHolder)holder).tvMessage.setText(dataCBean.getMessage());
-            ((ReplyHolder)holder).tvName.setText(dataCBean.getUser().getNickname());
-            ((ReplyHolder)holder).tvCount.setText(dataCBean.getLikeCount());
-            Glide.with(context).load(dataCBean.getUser().getAvatar()).into(((ReplyHolder)holder).ivHeader);
-        }else {
+        if(position==0){
             ((HeaderHolder)holder).tvTitle.setText(title);
             ((HeaderHolder)holder).tvDescription.setText(desc);
-            ((HeaderHolder)holder).tvShare.setText(share);
-            ((HeaderHolder)holder).tvCollection.setText(collect);
+            ((HeaderHolder)holder).tvShare.setText(share+"");
+            ((HeaderHolder)holder).tvCollection.setText(collect+"");
             ((HeaderHolder)holder).tvName.setText(name);
             Glide.with(context).load(head).into(((HeaderHolder)holder).imgHead);
-
         }
+        if(position>0){
+            VideoRalatedModel.ItemListBean.DataBean dataVBean=videoList.get(position-1);
+            CommentModel.ItemListBean.DataBean dataCBean=commentList.get(position-1-videoList.size());
+            if (getItemViewType(position)==TITLE){
+                if(position>videoList.size()+1){
+                    ((TitleHolder)holder).tv.setText(dataCBean.getText());
+                }else {
+                    ((TitleHolder)holder).tv.setText(dataVBean.getText());
+                }
+            }else if(getItemViewType(position)==VIDEO){
+                ((VideoHolder)holder).tvTitle.setText(dataVBean.getTitle());
+                ((VideoHolder)holder).tvDescription.setText(dataVBean.getDescription());
+                int minutes = dataVBean.getDuration() / 60;
+                int remainingSeconds = dataVBean.getDuration() % 60;
+                ((VideoHolder)holder).tvTime.setText(minutes+":"+remainingSeconds);
+                Glide.with(context).load(dataVBean.getCover().getFeed()).into(((VideoHolder)holder).iv);
+
+            }else{
+                ((ReplyHolder)holder).tvTime.setText(dataCBean.getCreateTime()+"");
+                ((ReplyHolder)holder).tvMessage.setText(dataCBean.getMessage());
+                ((ReplyHolder)holder).tvName.setText(dataCBean.getUser().getNickname());
+                ((ReplyHolder)holder).tvCount.setText(dataCBean.getLikeCount());
+                Glide.with(context).load(dataCBean.getUser().getAvatar()).into(((ReplyHolder)holder).ivHeader);
+            }
+        }
+
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position==0){
             return HEADER;
-        }else if (videoList.get(position-1).getDataType().equals("VideoBeanForClient")){
-            return VIDEO;
-        }else if (commentList.get((position-1-videoList.size())).getDataType().equals("ReplyBeanForClient")){
-            return REPLY;
         }else {
-            return TITLE;
+            if (videoList.get(position-1).getDataType().equals("VideoBeanForClient")){
+                return VIDEO;
+            }else if (commentList.get((position-1-videoList.size())).getDataType().equals("ReplyBeanForClient")){
+                return REPLY;
+            }else {
+                return TITLE;
+            }
         }
+
+
     }
 
     @Override

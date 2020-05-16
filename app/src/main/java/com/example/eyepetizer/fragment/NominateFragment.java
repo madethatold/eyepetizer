@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -26,20 +27,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class NominateFragment extends Fragment {
-    private static String TAG="!!!!!!!!!!!!!!!!!!!!!!!";
+    private static String TAG="!!!!!!!!!!!!!!!!!!!!!!!Nominate";
     private FragmentNominateBinding binding;
     private String nextUrl;
 
-    private List<NominateModel.ItemEntity> itemEntityList;
-    private List<NominateModel.ItemEntity.DataEntity> dataEntityList;
+    private List<NominateModel.ItemListBean> itemEntityList=new ArrayList<>();
+    private List<NominateModel.ItemListBean.DataBean> dataEntityList=new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding=FragmentNominateBinding.inflate(getLayoutInflater());
         initview();
-//        downLoad(API.NOMINATE);
-        Log.d(TAG, "onCreateView: "+API.NOMINATE);
+        downLoad(API.NOMINATE);
         return binding.getRoot();
     }
 
@@ -53,8 +53,9 @@ public class NominateFragment extends Fragment {
 
         //为recyclerView设置Adapter
         binding.rvNominate.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-//        NominateAdapter adapter=new NominateAdapter(itemEntities,dataList);
-//        binding.rvNominate.setAdapter(adapter);
+        NominateAdapter adapter=new NominateAdapter(itemEntityList,dataEntityList);
+        binding.rvNominate.setAdapter(adapter);
+        Log.d(TAG, "initview: "+itemEntityList.size()+"---"+dataEntityList.size());
     }
 
     //网络请求
@@ -80,18 +81,23 @@ public class NominateFragment extends Fragment {
 
     //json转换为实体类
     private void parseJSONWithGSON(String jsonData){
+
+
         Gson gson=new Gson();
         NominateModel nominateModel=gson.fromJson(jsonData,NominateModel.class);
         nextUrl=nominateModel.getNextPageUrl();
         Log.d(TAG, "parseJSONWithGSON: "+nextUrl);
-//        //list初始化
-//        itemEntityList=nominateModel.getLists();
-//
-//        for (NominateModel.ItemEntity itemEntity: itemEntityList){
-//            dataEntityList.add(itemEntity.getDataEntity());
-//        }
-//
-//        Log.d(TAG, "parseJSONWithGSON: "+itemEntityList.get(0).getType());
+        itemEntityList=nominateModel.getItemList();
+        itemEntityList.remove(0);
+
+        for (NominateModel.ItemListBean bean:itemEntityList){
+            dataEntityList.add(bean.getData());
+        }
+
+        Log.d(TAG, "parseJSONWithGSON: "+itemEntityList.size()+"     "+dataEntityList.size());
 
     }
 }
+
+
+

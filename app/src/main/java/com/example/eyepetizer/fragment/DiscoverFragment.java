@@ -29,7 +29,7 @@ import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
 
-    private static String TAG="_______________________";
+    private static String TAG="_______________________Discover";
     private FragmentDiscoverBinding binding;
     private List<FindMoreModel.ItemListBeanX> itemListBeanXList=new ArrayList<>();
     private List<FindMoreModel.ItemListBeanX.DataBeanX> dataBeanXList=new ArrayList<>();
@@ -39,8 +39,9 @@ public class DiscoverFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding=FragmentDiscoverBinding.inflate(getLayoutInflater());
-        initview();
         downLoad(API.DISCOVER);
+        initview();
+
         Log.d(TAG, "onCreateView: "+API.DISCOVER);
         return binding.getRoot();
     }
@@ -57,6 +58,7 @@ public class DiscoverFragment extends Fragment {
         binding.rvFindMore.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         FindMoreAdapter adapter=new FindMoreAdapter(itemListBeanXList,dataBeanXList);
         binding.rvFindMore.setAdapter(adapter);
+        Log.d(TAG, "initview: "+itemListBeanXList.size()+"     "+dataBeanXList.size());
     }
 
     //网络请求
