@@ -37,14 +37,13 @@ public class DailyFragment extends Fragment {
     private List<DailyModel.itemEntity.DataEntity> dataList=new ArrayList<>();
     private List<DailyModel.itemEntity> itemEntities=new ArrayList<>();
     private String nextUrl;
+    private DailyAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding=FragmentDailyBinding.inflate(getLayoutInflater());
         downLoad(API.DAILY);
-        initview();
-
         return binding.getRoot();
     }
 
@@ -63,7 +62,7 @@ public class DailyFragment extends Fragment {
 
         //为recyclerView设置Adapter
         binding.rvDaily.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        DailyAdapter adapter=new DailyAdapter(itemEntities,dataList);
+        adapter=new DailyAdapter(itemEntities,dataList);
         binding.rvDaily.setAdapter(adapter);
 
         Log.d(TAG, "initview: "+itemEntities.size()+"      "+dataList.size());
@@ -83,6 +82,13 @@ public class DailyFragment extends Fragment {
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
                     parseJSONWithGSON(responseData);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initview();
+                        }
+                    });
+                    adapter.notifyDataSetChanged();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -93,7 +99,6 @@ public class DailyFragment extends Fragment {
     //json转换为实体类
     private void parseJSONWithGSON(String jsonData){
         Gson gson=new Gson();
-
         DailyModel dailyModel=gson.fromJson(jsonData,DailyModel.class);
         nextUrl=dailyModel.getNextPageUrl();
 

@@ -46,6 +46,7 @@ public class VideoDetailActivity extends AppCompatActivity {
     private int collect;
     private int share;
 
+    private VideoDetailAdapter adapter;
 
 
     @Override
@@ -57,14 +58,11 @@ public class VideoDetailActivity extends AppCompatActivity {
         String commentAPI=API.COMMENT+id+"";
         String videoAPI=API.RELATED+id+"";
         downLoad(videoAPI,commentAPI);
-        initview();
-        
-
     }
 
     private void initview(){
-        binding.rvList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        VideoDetailAdapter adapter=new VideoDetailAdapter(videoDataList,commentDataList,head,title,desc,name,collect,share);
+        binding.rvList.setLayoutManager(new LinearLayoutManager(this));
+        adapter=new VideoDetailAdapter(videoDataList,head,title,desc,name,collect,share);
         binding.rvList.setAdapter(adapter);
         Log.d(TAG, "initview: "+videoDataList.size()+"  "+commentDataList.size());
 
@@ -117,6 +115,13 @@ public class VideoDetailActivity extends AppCompatActivity {
                     String responseData1=response1.body().string();
                     String responseData2=response2.body().string();
                     parseJSONWithGSON(responseData1,responseData2);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initview();
+                        }
+                    });
+                    adapter.notifyDataSetChanged();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -131,18 +136,16 @@ public class VideoDetailActivity extends AppCompatActivity {
 
         VideoRalatedModel videoRalatedModel=gson.fromJson(jsonData1,VideoRalatedModel.class);
         videoList=videoRalatedModel.getItemList();
-
         for (VideoRalatedModel.ItemListBean bean : videoList){
             videoDataList.add(bean.getData());
         }
 
-        CommentModel commentModel=gson.fromJson(jsonData2,CommentModel.class);
-        commentList=commentModel.getItemList();
-        for (CommentModel.ItemListBean bean:commentList){
-            commentDataList.add(bean.getData());
-        }
+//        CommentModel commentModel=gson.fromJson(jsonData2,CommentModel.class);
+//        commentList=commentModel.getItemList();
+//        for (CommentModel.ItemListBean bean:commentList){
+//            commentDataList.add(bean.getData());
+//        }
 
-        Log.d(TAG, "parseJSONWithGSON: "+commentDataList.size()+"   "+videoDataList.size());
     }
 
 }

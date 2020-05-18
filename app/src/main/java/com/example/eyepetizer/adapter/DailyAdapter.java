@@ -156,6 +156,32 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     .load(entity.getHeader().getIcon())
                     .into(((ViewHolder)holder).imgHead);
 
+//            ((ViewHolder)holder).img.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    video=entity.getContent().getData().getPlayUrl();
+//                    blurred=entity.getContent().getData().getCoverBean().getBlurred();
+//                    id=entity.getContent().getData().getId();
+//                    head=entity.getHeader().getIcon();
+//                    name=entity.getHeader().getTitle();
+//                    title=entity.getContent().getData().getTitle();
+//                    desc=entity.getContent().getData().getDescription();
+//                    collect=entity.getContent().getData().getConsumption().getCollectionCount();
+//                    share=entity.getContent().getData().getConsumption().getShareCount();
+//
+//                    Intent intent=new Intent(context, VideoDetailActivity.class);
+//                    intent.putExtra("video",video);
+//                    intent.putExtra("blurred",blurred);
+//                    intent.putExtra("id",id);
+//                    intent.putExtra("head",head);
+//                    intent.putExtra("name",name);
+//                    intent.putExtra("title",title);
+//                    intent.putExtra("description",desc);
+//                    intent.putExtra("collect",collect);
+//                    intent.putExtra("share",share);
+//                    context.startActivity(intent);
+//                }
+//            });
 
         }
 

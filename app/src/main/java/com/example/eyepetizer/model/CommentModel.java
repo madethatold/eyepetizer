@@ -9,7 +9,6 @@ public class CommentModel {
     private int count;
     private int total;
     private String nextPageUrl;
-    private boolean adExist;
     @SerializedName("itemList")
     private List<ItemListBean> itemList;
 
@@ -37,14 +36,6 @@ public class CommentModel {
         this.nextPageUrl = nextPageUrl;
     }
 
-    public boolean isAdExist() {
-        return adExist;
-    }
-
-    public void setAdExist(boolean adExist) {
-        this.adExist = adExist;
-    }
-
     public List<ItemListBean> getItemList() {
         return itemList;
     }
@@ -59,7 +50,6 @@ public class CommentModel {
         @SerializedName("data")
         private DataBean data;
         private int id;
-        private int adIndex;
 
         public String getType() {
             return type;
@@ -85,14 +75,6 @@ public class CommentModel {
             this.id = id;
         }
 
-        public int getAdIndex() {
-            return adIndex;
-        }
-
-        public void setAdIndex(int adIndex) {
-            this.adIndex = adIndex;
-        }
-
         public static class DataBean {
             private String text;
             private String dataType;
@@ -105,20 +87,15 @@ public class CommentModel {
             private String message;
             private String replyStatus;
             private long createTime;
+            @SerializedName("user")
             private UserBean user;
             private int likeCount;
             private boolean liked;
             private boolean hot;
-            private Object userType;
             private String type;
-            private Object actionUrl;
             private String imageUrl;
-            private Object ugcVideoId;
-            private Object parentReply;
             private boolean showParentReply;
             private boolean showConversationButton;
-            private Object ugcVideoUrl;
-            private Object cover;
             private boolean userBlocked;
             private String sid;
 
@@ -242,14 +219,6 @@ public class CommentModel {
                 this.hot = hot;
             }
 
-            public Object getUserType() {
-                return userType;
-            }
-
-            public void setUserType(Object userType) {
-                this.userType = userType;
-            }
-
             public String getType() {
                 return type;
             }
@@ -258,36 +227,12 @@ public class CommentModel {
                 this.type = type;
             }
 
-            public Object getActionUrl() {
-                return actionUrl;
-            }
-
-            public void setActionUrl(Object actionUrl) {
-                this.actionUrl = actionUrl;
-            }
-
             public String getImageUrl() {
                 return imageUrl;
             }
 
             public void setImageUrl(String imageUrl) {
                 this.imageUrl = imageUrl;
-            }
-
-            public Object getUgcVideoId() {
-                return ugcVideoId;
-            }
-
-            public void setUgcVideoId(Object ugcVideoId) {
-                this.ugcVideoId = ugcVideoId;
-            }
-
-            public Object getParentReply() {
-                return parentReply;
-            }
-
-            public void setParentReply(Object parentReply) {
-                this.parentReply = parentReply;
             }
 
             public boolean isShowParentReply() {
@@ -304,22 +249,6 @@ public class CommentModel {
 
             public void setShowConversationButton(boolean showConversationButton) {
                 this.showConversationButton = showConversationButton;
-            }
-
-            public Object getUgcVideoUrl() {
-                return ugcVideoUrl;
-            }
-
-            public void setUgcVideoUrl(Object ugcVideoUrl) {
-                this.ugcVideoUrl = ugcVideoUrl;
-            }
-
-            public Object getCover() {
-                return cover;
-            }
-
-            public void setCover(Object cover) {
-                this.cover = cover;
             }
 
             public boolean isUserBlocked() {
@@ -339,29 +268,6 @@ public class CommentModel {
             }
 
             public static class UserBean {
-                /**
-                 * uid : 303533138
-                 * nickname : pursuitx
-                 * avatar : http://img.kaiyanapp.com/3579277300d782b21f48f6e8240b5622.jpeg?imageMogr2/quality/60/format/jpg
-                 * userType : NORMAL
-                 * ifPgc : false
-                 * description : Marvels’s girl. 人民有信仰，国家有力量. （ding～🌼✨这里是漫威女孩的个人分享主页，我会给大家推荐美剧，app，书籍，电影，壁纸等等.）
-                 * area : null
-                 * gender : female
-                 * registDate : 1579167182000
-                 * releaseDate : 1588610524000
-                 * cover : http://img.kaiyanapp.com/302965be5cf5276119f5f06c14719440.jpeg?imageMogr2/quality/60/format/jpg
-                 * actionUrl : eyepetizer://pgc/detail/303533138/?title=pursuitx&userType=NORMAL&tabIndex=0
-                 * followed : false
-                 * limitVideoOpen : false
-                 * library : BLOCK
-                 * birthday : 1057075200000
-                 * country :
-                 * city :
-                 * university :
-                 * job :
-                 * expert : false
-                 */
 
                 private int uid;
                 private String nickname;
@@ -369,7 +275,6 @@ public class CommentModel {
                 private String userType;
                 private boolean ifPgc;
                 private String description;
-                private Object area;
                 private String gender;
                 private long registDate;
                 private long releaseDate;
@@ -431,14 +336,6 @@ public class CommentModel {
 
                 public void setDescription(String description) {
                     this.description = description;
-                }
-
-                public Object getArea() {
-                    return area;
-                }
-
-                public void setArea(Object area) {
-                    this.area = area;
                 }
 
                 public String getGender() {

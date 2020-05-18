@@ -64,6 +64,8 @@ public class NominateModel {
             private String category;
             private String playUrl;
             private long releaseTime;
+            private int duration;
+
             @SerializedName("header")
             private HeaderBean header;
             @SerializedName("content")
@@ -76,6 +78,14 @@ public class NominateModel {
             private CoverBean cover;
             @SerializedName("consumption")
             private ConsumptionBean consumption;
+
+            public int getDuration() {
+                return duration;
+            }
+
+            public void setDuration(int duration) {
+                this.duration = duration;
+            }
 
             public String getDataType() {
                 return dataType;

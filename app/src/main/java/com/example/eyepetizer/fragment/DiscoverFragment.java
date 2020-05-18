@@ -34,15 +34,13 @@ public class DiscoverFragment extends Fragment {
     private List<FindMoreModel.ItemListBeanX> itemListBeanXList=new ArrayList<>();
     private List<FindMoreModel.ItemListBeanX.DataBeanX> dataBeanXList=new ArrayList<>();
 
+    private FindMoreAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding=FragmentDiscoverBinding.inflate(getLayoutInflater());
         downLoad(API.DISCOVER);
-        initview();
-
-        Log.d(TAG, "onCreateView: "+API.DISCOVER);
         return binding.getRoot();
     }
 
@@ -56,7 +54,7 @@ public class DiscoverFragment extends Fragment {
 
         //为recyclerView设置Adapter
         binding.rvFindMore.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        FindMoreAdapter adapter=new FindMoreAdapter(itemListBeanXList,dataBeanXList);
+        adapter=new FindMoreAdapter(itemListBeanXList,dataBeanXList);
         binding.rvFindMore.setAdapter(adapter);
         Log.d(TAG, "initview: "+itemListBeanXList.size()+"     "+dataBeanXList.size());
     }
@@ -75,6 +73,13 @@ public class DiscoverFragment extends Fragment {
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
                     parseJSONWithGSON(responseData);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initview();
+                        }
+                    });
+                    adapter.notifyDataSetChanged();
                 }catch (Exception e){
                     e.printStackTrace();
                 }

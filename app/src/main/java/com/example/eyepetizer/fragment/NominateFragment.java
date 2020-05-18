@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.eyepetizer.adapter.NominateAdapter;
 import com.example.eyepetizer.databinding.FragmentNominateBinding;
+import com.example.eyepetizer.model.CommentModel;
 import com.example.eyepetizer.model.NominateModel;
 import com.example.eyepetizer.networks.API;
 import com.google.gson.Gson;
@@ -30,6 +31,7 @@ public class NominateFragment extends Fragment {
     private static String TAG="!!!!!!!!!!!!!!!!!!!!!!!Nominate";
     private FragmentNominateBinding binding;
     private String nextUrl;
+    private NominateAdapter adapter;
 
     private List<NominateModel.ItemListBean> itemEntityList=new ArrayList<>();
     private List<NominateModel.ItemListBean.DataBean> dataEntityList=new ArrayList<>();
@@ -38,7 +40,6 @@ public class NominateFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding=FragmentNominateBinding.inflate(getLayoutInflater());
-        initview();
         downLoad(API.NOMINATE);
         return binding.getRoot();
     }
@@ -53,7 +54,7 @@ public class NominateFragment extends Fragment {
 
         //为recyclerView设置Adapter
         binding.rvNominate.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        NominateAdapter adapter=new NominateAdapter(itemEntityList,dataEntityList);
+        adapter=new NominateAdapter(itemEntityList,dataEntityList);
         binding.rvNominate.setAdapter(adapter);
         Log.d(TAG, "initview: "+itemEntityList.size()+"---"+dataEntityList.size());
     }
@@ -71,7 +72,15 @@ public class NominateFragment extends Fragment {
                             .build();
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
+
                     parseJSONWithGSON(responseData);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initview();
+                        }
+                    });
+                    adapter.notifyDataSetChanged();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -95,7 +104,6 @@ public class NominateFragment extends Fragment {
         }
 
         Log.d(TAG, "parseJSONWithGSON: "+itemEntityList.size()+"     "+dataEntityList.size());
-
     }
 }
 

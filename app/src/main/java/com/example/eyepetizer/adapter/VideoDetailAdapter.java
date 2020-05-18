@@ -2,7 +2,9 @@ package com.example.eyepetizer.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,24 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.eyepetizer.activity.VideoDetailActivity;
 import com.example.eyepetizer.databinding.ItemDetailCardBinding;
 import com.example.eyepetizer.databinding.ItemDetailHeaderBinding;
 import com.example.eyepetizer.databinding.ItemReplyBinding;
 import com.example.eyepetizer.databinding.ItemTitleBinding;
 import com.example.eyepetizer.model.CommentModel;
-import com.example.eyepetizer.model.FindMoreModel;
 import com.example.eyepetizer.model.VideoRalatedModel;
 
 import java.util.List;
 
 public class VideoDetailAdapter extends RecyclerView.Adapter {
-
     private List<VideoRalatedModel.ItemListBean.DataBean> videoList;
-    private List<CommentModel.ItemListBean.DataBean> commentList;
     private static int HEADER=0;
     private static int TITLE=1;
     private static int VIDEO=2;
-    private static int REPLY=3;
     private Context context;
 
     private String head;
@@ -38,10 +37,13 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
     private int collect;
     private int share;
 
+    private String video;
+    private String blurred;
+    private int id;
 
-    public VideoDetailAdapter(List<VideoRalatedModel.ItemListBean.DataBean> list1,List<CommentModel.ItemListBean.DataBean> list2
-    ,String head,String title,String desc,String name,int collect,int share){
-        this.commentList=list2;
+
+    public VideoDetailAdapter(List<VideoRalatedModel.ItemListBean.DataBean> list1
+            ,String head,String title,String desc,String name,int collect,int share){
         this.videoList=list1;
         this.head=head;
         this.title=title;
@@ -78,19 +80,19 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
     }
 
     //回复
-    static class ReplyHolder extends RecyclerView.ViewHolder{
-        private TextView tvName,tvMessage,tvTime,tvCount;
-        private ImageView ivHeader;
-
-        public ReplyHolder(@NonNull ItemReplyBinding itemView) {
-            super(itemView.getRoot());
-            tvName=itemView.tvUserName;
-            tvCount=itemView.tvLikeCount;
-            tvMessage=itemView.tvUserMessage;
-            tvTime=itemView.tvUserReleaseTime;
-            ivHeader=itemView.ivUserAvatar;
-        }
-    }
+//    static class ReplyHolder extends RecyclerView.ViewHolder{
+//        private TextView tvName,tvMessage,tvTime,tvCount;
+//        private ImageView ivHeader;
+//
+//        public ReplyHolder(@NonNull ItemReplyBinding itemView) {
+//            super(itemView.getRoot());
+//            tvName=itemView.tvUserName;
+//            tvCount=itemView.tvLikeCount;
+//            tvMessage=itemView.tvUserMessage;
+//            tvTime=itemView.tvUserReleaseTime;
+//            ivHeader=itemView.ivUserAvatar;
+//        }
+//    }
 
     //HEADER
     static class HeaderHolder extends RecyclerView.ViewHolder{
@@ -120,7 +122,6 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
         }
 
         ItemDetailHeaderBinding headerBinding=ItemDetailHeaderBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
-        ItemReplyBinding replyBinding=ItemReplyBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
         ItemDetailCardBinding cardBinding=ItemDetailCardBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
         ItemTitleBinding titleBinding=ItemTitleBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
 
@@ -128,8 +129,6 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
             return new HeaderHolder(headerBinding);
         }else if(viewType==VIDEO){
             return new VideoHolder(cardBinding);
-        }else if(viewType==REPLY){
-            return new ReplyHolder(replyBinding);
         }else {
             return new TitleHolder(titleBinding);
         }
@@ -149,27 +148,46 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
         }
         if(position>0){
             VideoRalatedModel.ItemListBean.DataBean dataVBean=videoList.get(position-1);
-            CommentModel.ItemListBean.DataBean dataCBean=commentList.get(position-1-videoList.size());
             if (getItemViewType(position)==TITLE){
-                if(position>videoList.size()+1){
-                    ((TitleHolder)holder).tv.setText(dataCBean.getText());
-                }else {
-                    ((TitleHolder)holder).tv.setText(dataVBean.getText());
-                }
-            }else if(getItemViewType(position)==VIDEO){
+                ((TitleHolder)holder).tv.setText(dataVBean.getText());
+            }else{
                 ((VideoHolder)holder).tvTitle.setText(dataVBean.getTitle());
-                ((VideoHolder)holder).tvDescription.setText(dataVBean.getDescription());
+                ((VideoHolder)holder).tvDescription.setText("#"+dataVBean.getCategory());
                 int minutes = dataVBean.getDuration() / 60;
                 int remainingSeconds = dataVBean.getDuration() % 60;
-                ((VideoHolder)holder).tvTime.setText(minutes+":"+remainingSeconds);
+                if (remainingSeconds<10){
+                    ((VideoHolder)holder).tvTime.setText(minutes+":0"+remainingSeconds);
+                }else {
+                    ((VideoHolder)holder).tvTime.setText(minutes+":"+remainingSeconds);
+                }
                 Glide.with(context).load(dataVBean.getCover().getFeed()).into(((VideoHolder)holder).iv);
+                ((VideoHolder)holder).iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        video=dataVBean.getPlayUrl();
+                        blurred=dataVBean.getCover().getBlurred();
+                        id=dataVBean.getId();
+                        head=dataVBean.getAuthor().getIcon();
+                        name=dataVBean.getAuthor().getName();
+                        title=dataVBean.getTitle();
+                        desc=dataVBean.getDescription();
+                        collect=dataVBean.getConsumption().getCollectionCount();
+                        share=dataVBean.getConsumption().getShareCount();
 
-            }else{
-                ((ReplyHolder)holder).tvTime.setText(dataCBean.getCreateTime()+"");
-                ((ReplyHolder)holder).tvMessage.setText(dataCBean.getMessage());
-                ((ReplyHolder)holder).tvName.setText(dataCBean.getUser().getNickname());
-                ((ReplyHolder)holder).tvCount.setText(dataCBean.getLikeCount());
-                Glide.with(context).load(dataCBean.getUser().getAvatar()).into(((ReplyHolder)holder).ivHeader);
+                        Intent intent=new Intent(context, VideoDetailActivity.class);
+                        intent.putExtra("video",video);
+                        intent.putExtra("blurred",blurred);
+                        intent.putExtra("id",id);
+                        intent.putExtra("head",head);
+                        intent.putExtra("name",name);
+                        intent.putExtra("title",title);
+                        intent.putExtra("description",desc);
+                        intent.putExtra("collect",collect);
+                        intent.putExtra("share",share);
+                        context.startActivity(intent);
+                    }
+                });
+
             }
         }
 
@@ -182,9 +200,7 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
         }else {
             if (videoList.get(position-1).getDataType().equals("VideoBeanForClient")){
                 return VIDEO;
-            }else if (commentList.get((position-1-videoList.size())).getDataType().equals("ReplyBeanForClient")){
-                return REPLY;
-            }else {
+            } else {
                 return TITLE;
             }
         }
@@ -194,6 +210,6 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return commentList.size()+videoList.size()+1;
+        return videoList.size()+1;
     }
 }
