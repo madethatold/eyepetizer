@@ -239,6 +239,7 @@ public class DailyModel {
                     private String url;
                     private String playUrl;
                     private String category;
+                    private int duration;
                     @SerializedName("cover")
                     private CoverBean coverBean;
                     @SerializedName("consumption")
@@ -250,6 +251,14 @@ public class DailyModel {
 
                     public void setConsumption(Consumption consumption) {
                         this.consumption = consumption;
+                    }
+
+                    public int getDuration() {
+                        return duration;
+                    }
+
+                    public void setDuration(int duration) {
+                        this.duration = duration;
                     }
 
                     public CoverBean getCoverBean() {

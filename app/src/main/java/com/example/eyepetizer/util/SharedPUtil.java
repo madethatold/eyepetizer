@@ -35,7 +35,6 @@ public class SharedPUtil {
     }
 
 
-
     public static Object getParam(Context context, String key, Object defaultObject) {
         String type = defaultObject.getClass().getSimpleName();
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);

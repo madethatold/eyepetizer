@@ -1,8 +1,5 @@
 package com.example.eyepetizer.networks;
 
-import android.content.Context;
-import android.content.Intent;
-
 public interface API {
     //首页-日报
     public static final String DAILY="http://baobab.kaiyanapp.com/api/v5/index/tab/feed";
@@ -18,4 +15,12 @@ public interface API {
 
     //视频详情页-评论
     public static final String COMMENT="http://baobab.kaiyanapp.com/api/v2/replies/video?videoId=";
+
+    //社区页-推荐
+    public static final String NOMINATE2="http://baobab.kaiyanapp.com/api/v7/community/tab/rec";
+
+    //社区页-关注
+    public static final String FOLLOW="http://baobab.kaiyanapp.com/api/v6/community/tab/follow";
+
+
 }

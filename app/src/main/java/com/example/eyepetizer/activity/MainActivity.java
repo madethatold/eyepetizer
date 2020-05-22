@@ -1,19 +1,18 @@
 package com.example.eyepetizer.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.eyepetizer.R;
 import com.example.eyepetizer.fragment.CommunityFragment;
@@ -26,12 +25,12 @@ import com.example.eyepetizer.util.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private LinearLayout ll_main, ll_community, ll_upload,ll_notification,ll_me;
+    private LinearLayout ll_main, ll_community, ll_upload, ll_notification, ll_me;
 
-    private ImageView img_main, img_community, img_upload,img_notification,img_me;
-    private TextView text_main, text_community, text_notification,text_me;
+    private ImageView img_main, img_community, img_upload, img_notification, img_me;
+    private TextView text_main, text_community, text_notification, text_me;
 
     private MainFragmemt mainFragmemt;
     private CommunityFragment communityFragment;
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.layout_me: {
                 boolean userIsLogin = (boolean) SharedPUtil.getParam(MainActivity.this,
                         SharedPUtil.IS_LOGIN, false);
-                if(userIsLogin){
+                if (userIsLogin) {
                     if (meFragment == null) {
                         meFragment = new MeFragment();
                     }
@@ -137,19 +136,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ll_upload.setBackgroundColor(Color.parseColor("#ffffff"));
                     ll_notification.setBackgroundColor(Color.parseColor("#ffffff"));
                     ll_me.setBackgroundColor(Color.parseColor("#BBBBBB"));
-                }else {
-                    AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);//实例化
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);//实例化
                     builder.setTitle("提示").setMessage("请先登录或注册").setCancelable(false)
                             .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            }).setNegativeButton("继续浏览", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-                            startActivity(intent);
-                        }
-                    }).setNegativeButton("继续浏览", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ToastUtil.showMsg(MainActivity.this,"以游客模式继续浏览");
+                            ToastUtil.showMsg(MainActivity.this, "以游客模式继续浏览");
                         }
                     }).show();
                 }
@@ -162,23 +161,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void initview(){
-        ll_main=findViewById(R.id.layout_main);
-        ll_community=findViewById(R.id.layout_community);
-        ll_upload=findViewById(R.id.layout_upload);
-        ll_notification=findViewById(R.id.layout_notification);
-        ll_me=findViewById(R.id.layout_me);
+    private void initview() {
+        ll_main = findViewById(R.id.layout_main);
+        ll_community = findViewById(R.id.layout_community);
+        ll_upload = findViewById(R.id.layout_upload);
+        ll_notification = findViewById(R.id.layout_notification);
+        ll_me = findViewById(R.id.layout_me);
 
-        img_notification=findViewById(R.id.icon_notification);
-        img_main=findViewById(R.id.icon_main);
-        img_community=findViewById(R.id.icon_community);
-        img_me=findViewById(R.id.icon_me);
-        img_upload= findViewById(R.id.icon_upload);
+        img_notification = findViewById(R.id.icon_notification);
+        img_main = findViewById(R.id.icon_main);
+        img_community = findViewById(R.id.icon_community);
+        img_me = findViewById(R.id.icon_me);
+        img_upload = findViewById(R.id.icon_upload);
 
-        text_main=findViewById(R.id.text_main);
-        text_community=findViewById(R.id.text_community);
-        text_me=findViewById(R.id.text_me);
-        text_notification=findViewById(R.id.text_notification);
+        text_main = findViewById(R.id.text_main);
+        text_community = findViewById(R.id.text_community);
+        text_me = findViewById(R.id.text_me);
+        text_notification = findViewById(R.id.text_notification);
     }
 
     private void initFragment() {

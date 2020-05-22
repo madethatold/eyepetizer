@@ -34,7 +34,7 @@ public class NominateModel {
         this.itemList = itemList;
     }
 
-    public static class ItemListBean{
+    public static class ItemListBean {
         private String type;
         @SerializedName("data")
         private DataBean data;
@@ -55,7 +55,7 @@ public class NominateModel {
             this.data = data;
         }
 
-        public static class DataBean{
+        public static class DataBean {
             private String dataType;
             private String text;
             private int id;
@@ -65,6 +65,7 @@ public class NominateModel {
             private String playUrl;
             private long releaseTime;
             private int duration;
+            private String image;
 
             @SerializedName("header")
             private HeaderBean header;
@@ -78,6 +79,15 @@ public class NominateModel {
             private CoverBean cover;
             @SerializedName("consumption")
             private ConsumptionBean consumption;
+            private List<ItemListBeanx> itemList;
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
 
             public int getDuration() {
                 return duration;
@@ -199,7 +209,15 @@ public class NominateModel {
                 this.consumption = consumption;
             }
 
-            public static class HeaderBean{
+            public List<ItemListBeanx> getItemList() {
+                return itemList;
+            }
+
+            public void setItemList(List<ItemListBeanx> itemList) {
+                this.itemList = itemList;
+            }
+
+            public static class HeaderBean {
 
                 /**
                  * id : 5622
@@ -366,7 +384,7 @@ public class NominateModel {
                 }
             }
 
-            public static class ContentBean{
+            public static class ContentBean {
 
 
                 /**
@@ -1530,7 +1548,7 @@ public class NominateModel {
                 }
             }
 
-            public static class TagsBean{
+            public static class TagsBean {
 
                 /**
                  * id : 751
@@ -1677,7 +1695,7 @@ public class NominateModel {
                 }
             }
 
-            public static class AuthorBean{
+            public static class AuthorBean {
 
                 /**
                  * id : 2162
@@ -1896,7 +1914,7 @@ public class NominateModel {
                 }
             }
 
-            public static class CoverBean{
+            public static class CoverBean {
 
                 /**
                  * feed : http://img.kaiyanapp.com/f2dcaf86a23cae97bd0af21b069507fb.jpeg?imageMogr2/quality/60
@@ -1953,7 +1971,7 @@ public class NominateModel {
                 }
             }
 
-            public static class ConsumptionBean{
+            public static class ConsumptionBean {
 
                 /**
                  * collectionCount : 3797
@@ -2000,6 +2018,1355 @@ public class NominateModel {
                 }
             }
 
+            public static class ItemListBeanx{
+
+                private String type;
+                private DataBeanX data;
+                private int id;
+                private int adIndex;
+
+                public String getType() {
+                    return type;
+                }
+
+                public void setType(String type) {
+                    this.type = type;
+                }
+
+                public DataBeanX getData() {
+                    return data;
+                }
+
+                public void setData(DataBeanX data) {
+                    this.data = data;
+                }
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public int getAdIndex() {
+                    return adIndex;
+                }
+
+                public void setAdIndex(int adIndex) {
+                    this.adIndex = adIndex;
+                }
+
+                public static class DataBeanX {
+
+                    private String dataType;
+                    private HeaderBean header;
+                    private ContentBean content;
+
+                    public String getDataType() {
+                        return dataType;
+                    }
+
+                    public void setDataType(String dataType) {
+                        this.dataType = dataType;
+                    }
+
+                    public HeaderBean getHeader() {
+                        return header;
+                    }
+
+                    public void setHeader(HeaderBean header) {
+                        this.header = header;
+                    }
+
+                    public ContentBean getContent() {
+                        return content;
+                    }
+
+                    public void setContent(ContentBean content) {
+                        this.content = content;
+                    }
+
+                    public static class HeaderBean {
+                        /**
+                         * id : 195012
+                         * title : 眼科砖家：动森玩太多，双目是会失明的
+                         * font : null
+                         * subTitle : null
+                         * subTitleFont : null
+                         * textAlign : left
+                         * cover : null
+                         * label : null
+                         * actionUrl : eyepetizer://pgc/detail/4458/?title=Comedy%20Central&userType=PGC&tabIndex=1
+                         * labelList : null
+                         * rightText : null
+                         * icon : http://img.kaiyanapp.com/2b775c7d05db341a5c834087d1e14bf0.png?imageMogr2/quality/60/format/jpg
+                         * iconType : round
+                         * description : null
+                         * time : 1590109214000
+                         * showHateVideo : false
+                         */
+
+                        private int id;
+                        private String title;
+                        private Object font;
+                        private Object subTitle;
+                        private Object subTitleFont;
+                        private String textAlign;
+                        private Object cover;
+                        private Object label;
+                        private String actionUrl;
+                        private Object labelList;
+                        private Object rightText;
+                        private String icon;
+                        private String iconType;
+                        private Object description;
+                        private long time;
+                        private boolean showHateVideo;
+
+                        public int getId() {
+                            return id;
+                        }
+
+                        public void setId(int id) {
+                            this.id = id;
+                        }
+
+                        public String getTitle() {
+                            return title;
+                        }
+
+                        public void setTitle(String title) {
+                            this.title = title;
+                        }
+
+                        public Object getFont() {
+                            return font;
+                        }
+
+                        public void setFont(Object font) {
+                            this.font = font;
+                        }
+
+                        public Object getSubTitle() {
+                            return subTitle;
+                        }
+
+                        public void setSubTitle(Object subTitle) {
+                            this.subTitle = subTitle;
+                        }
+
+                        public Object getSubTitleFont() {
+                            return subTitleFont;
+                        }
+
+                        public void setSubTitleFont(Object subTitleFont) {
+                            this.subTitleFont = subTitleFont;
+                        }
+
+                        public String getTextAlign() {
+                            return textAlign;
+                        }
+
+                        public void setTextAlign(String textAlign) {
+                            this.textAlign = textAlign;
+                        }
+
+                        public Object getCover() {
+                            return cover;
+                        }
+
+                        public void setCover(Object cover) {
+                            this.cover = cover;
+                        }
+
+                        public Object getLabel() {
+                            return label;
+                        }
+
+                        public void setLabel(Object label) {
+                            this.label = label;
+                        }
+
+                        public String getActionUrl() {
+                            return actionUrl;
+                        }
+
+                        public void setActionUrl(String actionUrl) {
+                            this.actionUrl = actionUrl;
+                        }
+
+                        public Object getLabelList() {
+                            return labelList;
+                        }
+
+                        public void setLabelList(Object labelList) {
+                            this.labelList = labelList;
+                        }
+
+                        public Object getRightText() {
+                            return rightText;
+                        }
+
+                        public void setRightText(Object rightText) {
+                            this.rightText = rightText;
+                        }
+
+                        public String getIcon() {
+                            return icon;
+                        }
+
+                        public void setIcon(String icon) {
+                            this.icon = icon;
+                        }
+
+                        public String getIconType() {
+                            return iconType;
+                        }
+
+                        public void setIconType(String iconType) {
+                            this.iconType = iconType;
+                        }
+
+                        public Object getDescription() {
+                            return description;
+                        }
+
+                        public void setDescription(Object description) {
+                            this.description = description;
+                        }
+
+                        public long getTime() {
+                            return time;
+                        }
+
+                        public void setTime(long time) {
+                            this.time = time;
+                        }
+
+                        public boolean isShowHateVideo() {
+                            return showHateVideo;
+                        }
+
+                        public void setShowHateVideo(boolean showHateVideo) {
+                            this.showHateVideo = showHateVideo;
+                        }
+                    }
+
+                    public static class ContentBean {
+                        /**
+                         * type : video
+                         * data : {"dataType":"VideoBeanForClient","id":195012,"title":"眼科砖家：动森玩太多，双目是会失明的","description":"游戏玩太多，你的眼睛会瞎掉吗？眼科砖家告诉你，这恐怕是真的。并给出了非常歪（hu）门（shuo）邪（ba）道（dao）的科学依据，请自行判断。本台不做任何评论。","library":"DAILY","tags":[{"id":504,"name":"笑cry","actionUrl":"eyepetizer://tag/504/?title=%E7%AC%91cry","adTrack":null,"desc":null,"bgPicture":"http://img.kaiyanapp.com/3d3cb19d13cc16e8c3c2eddb12284fa3.jpeg?imageMogr2/quality/100","headerImage":"http://img.kaiyanapp.com/177986653f12273f6d55edafe856ffe3.jpeg?imageMogr2/quality/100","tagRecType":"NORMAL","childTagList":null,"childTagIdList":null,"haveReward":false,"ifNewest":false,"newestEndTime":null,"communityIndex":0},{"id":514,"name":"城会玩","actionUrl":"eyepetizer://tag/514/?title=%E5%9F%8E%E4%BC%9A%E7%8E%A9","adTrack":null,"desc":null,"bgPicture":"http://img.kaiyanapp.com/8eb06d77ae3f646d2f93b7fdca0995f0.jpeg?imageMogr2/quality/60/format/jpg","headerImage":"http://img.kaiyanapp.com/8eb06d77ae3f646d2f93b7fdca0995f0.jpeg?imageMogr2/quality/60/format/jpg","tagRecType":"NORMAL","childTagList":null,"childTagIdList":null,"haveReward":false,"ifNewest":false,"newestEndTime":null,"communityIndex":0},{"id":146,"name":"666","actionUrl":"eyepetizer://tag/146/?title=666","adTrack":null,"desc":null,"bgPicture":"https://i.ytimg.com/vi/MKWWhf8RAV8/maxresdefault.jpg","headerImage":"http://img.kaiyanapp.com/522f7e51abb07a4a4438b82ee54174a4.jpeg?imageMogr2/quality/100","tagRecType":"NORMAL","childTagList":null,"childTagIdList":null,"haveReward":false,"ifNewest":false,"newestEndTime":null,"communityIndex":0},{"id":750,"name":"搞笑短片","actionUrl":"eyepetizer://tag/750/?title=%E6%90%9E%E7%AC%91%E7%9F%AD%E7%89%87","adTrack":null,"desc":null,"bgPicture":"http://img.kaiyanapp.com/9f3c1d7ff7e62119d6f7a21e2c367571.jpeg?imageMogr2/quality/60/format/jpg","headerImage":"http://img.kaiyanapp.com/9f3c1d7ff7e62119d6f7a21e2c367571.jpeg?imageMogr2/quality/60/format/jpg","tagRecType":"NORMAL","childTagList":null,"childTagIdList":null,"haveReward":false,"ifNewest":false,"newestEndTime":null,"communityIndex":0},{"id":140,"name":"搞笑","actionUrl":"eyepetizer://tag/140/?title=%E6%90%9E%E7%AC%91","adTrack":null,"desc":"哈哈哈哈哈哈哈哈","bgPicture":"http://img.kaiyanapp.com/f787d5053443499e8d787911cd8b3876.jpeg?imageMogr2/quality/100","headerImage":"http://img.kaiyanapp.com/f2b803d3c383bba5a3888b2709160b6e.jpeg?imageMogr2/quality/60/format/jpg","tagRecType":"NORMAL","childTagList":null,"childTagIdList":null,"haveReward":false,"ifNewest":false,"newestEndTime":null,"communityIndex":0}],"consumption":{"collectionCount":119,"shareCount":117,"replyCount":3,"realCollectionCount":67},"resourceType":"video","slogan":null,"provider":{"name":"YouTube","alias":"youtube","icon":"http://img.kaiyanapp.com/fa20228bc5b921e837156923a58713f6.png"},"category":"搞笑","author":{"id":4458,"icon":"http://img.kaiyanapp.com/2b775c7d05db341a5c834087d1e14bf0.png?imageMogr2/quality/60/format/jpg","name":"Comedy Central","description":"喜剧中心是美国有线及卫星电视中的一个电视频道，专播喜剧及幽默节目。 ","link":"","latestReleaseTime":1590109214000,"videoNum":24,"adTrack":null,"follow":{"itemType":"author","itemId":4458,"followed":false},"shield":{"itemType":"author","itemId":4458,"shielded":false},"approvedNotReadyVideoCount":0,"ifPgc":true,"recSort":0,"expert":false},"cover":{"feed":"http://img.kaiyanapp.com/3abce77a2ebfba269e83293a91b37182.jpeg?imageMogr2/quality/60/format/jpg","detail":"http://img.kaiyanapp.com/3abce77a2ebfba269e83293a91b37182.jpeg?imageMogr2/quality/60/format/jpg","blurred":"http://img.kaiyanapp.com/989bfa1ccaea0a248dfd91f9ad6fe870.jpeg?imageMogr2/quality/60/format/jpg","sharing":null,"homepage":"http://img.kaiyanapp.com/3abce77a2ebfba269e83293a91b37182.jpeg?imageView2/1/w/720/h/560/format/jpg/q/75|watermark/1/image/aHR0cDovL2ltZy5rYWl5YW5hcHAuY29tL2JsYWNrXzMwLnBuZw==/dissolve/100/gravity/Center/dx/0/dy/0|imageslim"},"playUrl":"http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=default&source=aliyun&playUrlType=url_oss","thumbPlayUrl":null,"duration":326,"webUrl":{"raw":"http://www.eyepetizer.net/detail.html?vid=195012","forWeibo":"http://www.eyepetizer.net/detail.html?vid=195012&resourceType=video&utm_campaign=routine&utm_medium=share&utm_source=weibo&uid=0"},"releaseTime":1590109214000,"playInfo":[{"height":720,"width":1280,"urlList":[{"name":"aliyun","url":"http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=high&source=aliyun&playUrlType=url_oss","size":39115616},{"name":"ucloud","url":"http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=high&source=ucloud&playUrlType=url_oss","size":39115616}],"name":"高清","type":"high","url":"http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=high&source=aliyun&playUrlType=url_oss"}],"campaign":null,"waterMarks":null,"ad":false,"adTrack":[],"type":"NORMAL","titlePgc":null,"descriptionPgc":null,"remark":null,"ifLimitVideo":false,"searchWeight":0,"brandWebsiteInfo":null,"idx":0,"shareAdTrack":null,"favoriteAdTrack":null,"webAdTrack":null,"date":1590109200000,"promotion":null,"label":null,"labelList":[],"descriptionEditor":"游戏玩太多，你的眼睛会瞎掉吗？眼科砖家告诉你，这恐怕是真的。并给出了非常歪（hu）门（shuo）邪（ba）道（dao）的科学依据，请自行判断。本台不做任何评论。","collected":false,"reallyCollected":false,"played":false,"subtitles":[],"lastViewTime":null,"playlists":null,"src":null,"recallSource":null}
+                         * tag : null
+                         * id : 0
+                         * adIndex : -1
+                         */
+
+                        private String type;
+                        private DataBeanxx data;
+                        private Object tag;
+                        private int id;
+                        private int adIndex;
+
+                        public String getType() {
+                            return type;
+                        }
+
+                        public void setType(String type) {
+                            this.type = type;
+                        }
+
+                        public DataBeanxx getData() {
+                            return data;
+                        }
+
+                        public void setData(DataBeanxx data) {
+                            this.data = data;
+                        }
+
+                        public Object getTag() {
+                            return tag;
+                        }
+
+                        public void setTag(Object tag) {
+                            this.tag = tag;
+                        }
+
+                        public int getId() {
+                            return id;
+                        }
+
+                        public void setId(int id) {
+                            this.id = id;
+                        }
+
+                        public int getAdIndex() {
+                            return adIndex;
+                        }
+
+                        public void setAdIndex(int adIndex) {
+                            this.adIndex = adIndex;
+                        }
+
+                        public static class DataBeanxx {
+
+                            private String dataType;
+                            private int id;
+                            private String title;
+                            private String description;
+                            private String library;
+                            private ConsumptionBean consumption;
+                            private String resourceType;
+                            private Object slogan;
+                            private ProviderBean provider;
+                            private String category;
+                            private AuthorBean author;
+                            private CoverBean cover;
+                            private String playUrl;
+                            private Object thumbPlayUrl;
+                            private int duration;
+                            private WebUrlBean webUrl;
+                            private long releaseTime;
+                            private Object campaign;
+                            private Object waterMarks;
+                            private boolean ad;
+                            private String type;
+                            private Object titlePgc;
+                            private Object descriptionPgc;
+                            private Object remark;
+                            private boolean ifLimitVideo;
+                            private int searchWeight;
+                            private Object brandWebsiteInfo;
+                            private int idx;
+                            private Object shareAdTrack;
+                            private Object favoriteAdTrack;
+                            private Object webAdTrack;
+                            private long date;
+                            private Object promotion;
+                            private Object label;
+                            private String descriptionEditor;
+                            private boolean collected;
+                            private boolean reallyCollected;
+                            private boolean played;
+                            private Object lastViewTime;
+                            private Object playlists;
+                            private Object src;
+                            private Object recallSource;
+                            private List<TagsBean> tags;
+                            private List<PlayInfoBean> playInfo;
+                            private List<?> adTrack;
+                            private List<?> labelList;
+                            private List<?> subtitles;
+
+                            public String getDataType() {
+                                return dataType;
+                            }
+
+                            public void setDataType(String dataType) {
+                                this.dataType = dataType;
+                            }
+
+                            public int getId() {
+                                return id;
+                            }
+
+                            public void setId(int id) {
+                                this.id = id;
+                            }
+
+                            public String getTitle() {
+                                return title;
+                            }
+
+                            public void setTitle(String title) {
+                                this.title = title;
+                            }
+
+                            public String getDescription() {
+                                return description;
+                            }
+
+                            public void setDescription(String description) {
+                                this.description = description;
+                            }
+
+                            public String getLibrary() {
+                                return library;
+                            }
+
+                            public void setLibrary(String library) {
+                                this.library = library;
+                            }
+
+                            public ConsumptionBean getConsumption() {
+                                return consumption;
+                            }
+
+                            public void setConsumption(ConsumptionBean consumption) {
+                                this.consumption = consumption;
+                            }
+
+                            public String getResourceType() {
+                                return resourceType;
+                            }
+
+                            public void setResourceType(String resourceType) {
+                                this.resourceType = resourceType;
+                            }
+
+                            public Object getSlogan() {
+                                return slogan;
+                            }
+
+                            public void setSlogan(Object slogan) {
+                                this.slogan = slogan;
+                            }
+
+                            public ProviderBean getProvider() {
+                                return provider;
+                            }
+
+                            public void setProvider(ProviderBean provider) {
+                                this.provider = provider;
+                            }
+
+                            public String getCategory() {
+                                return category;
+                            }
+
+                            public void setCategory(String category) {
+                                this.category = category;
+                            }
+
+                            public AuthorBean getAuthor() {
+                                return author;
+                            }
+
+                            public void setAuthor(AuthorBean author) {
+                                this.author = author;
+                            }
+
+                            public CoverBean getCover() {
+                                return cover;
+                            }
+
+                            public void setCover(CoverBean cover) {
+                                this.cover = cover;
+                            }
+
+                            public String getPlayUrl() {
+                                return playUrl;
+                            }
+
+                            public void setPlayUrl(String playUrl) {
+                                this.playUrl = playUrl;
+                            }
+
+                            public Object getThumbPlayUrl() {
+                                return thumbPlayUrl;
+                            }
+
+                            public void setThumbPlayUrl(Object thumbPlayUrl) {
+                                this.thumbPlayUrl = thumbPlayUrl;
+                            }
+
+                            public int getDuration() {
+                                return duration;
+                            }
+
+                            public void setDuration(int duration) {
+                                this.duration = duration;
+                            }
+
+                            public WebUrlBean getWebUrl() {
+                                return webUrl;
+                            }
+
+                            public void setWebUrl(WebUrlBean webUrl) {
+                                this.webUrl = webUrl;
+                            }
+
+                            public long getReleaseTime() {
+                                return releaseTime;
+                            }
+
+                            public void setReleaseTime(long releaseTime) {
+                                this.releaseTime = releaseTime;
+                            }
+
+                            public Object getCampaign() {
+                                return campaign;
+                            }
+
+                            public void setCampaign(Object campaign) {
+                                this.campaign = campaign;
+                            }
+
+                            public Object getWaterMarks() {
+                                return waterMarks;
+                            }
+
+                            public void setWaterMarks(Object waterMarks) {
+                                this.waterMarks = waterMarks;
+                            }
+
+                            public boolean isAd() {
+                                return ad;
+                            }
+
+                            public void setAd(boolean ad) {
+                                this.ad = ad;
+                            }
+
+                            public String getType() {
+                                return type;
+                            }
+
+                            public void setType(String type) {
+                                this.type = type;
+                            }
+
+                            public Object getTitlePgc() {
+                                return titlePgc;
+                            }
+
+                            public void setTitlePgc(Object titlePgc) {
+                                this.titlePgc = titlePgc;
+                            }
+
+                            public Object getDescriptionPgc() {
+                                return descriptionPgc;
+                            }
+
+                            public void setDescriptionPgc(Object descriptionPgc) {
+                                this.descriptionPgc = descriptionPgc;
+                            }
+
+                            public Object getRemark() {
+                                return remark;
+                            }
+
+                            public void setRemark(Object remark) {
+                                this.remark = remark;
+                            }
+
+                            public boolean isIfLimitVideo() {
+                                return ifLimitVideo;
+                            }
+
+                            public void setIfLimitVideo(boolean ifLimitVideo) {
+                                this.ifLimitVideo = ifLimitVideo;
+                            }
+
+                            public int getSearchWeight() {
+                                return searchWeight;
+                            }
+
+                            public void setSearchWeight(int searchWeight) {
+                                this.searchWeight = searchWeight;
+                            }
+
+                            public Object getBrandWebsiteInfo() {
+                                return brandWebsiteInfo;
+                            }
+
+                            public void setBrandWebsiteInfo(Object brandWebsiteInfo) {
+                                this.brandWebsiteInfo = brandWebsiteInfo;
+                            }
+
+                            public int getIdx() {
+                                return idx;
+                            }
+
+                            public void setIdx(int idx) {
+                                this.idx = idx;
+                            }
+
+                            public Object getShareAdTrack() {
+                                return shareAdTrack;
+                            }
+
+                            public void setShareAdTrack(Object shareAdTrack) {
+                                this.shareAdTrack = shareAdTrack;
+                            }
+
+                            public Object getFavoriteAdTrack() {
+                                return favoriteAdTrack;
+                            }
+
+                            public void setFavoriteAdTrack(Object favoriteAdTrack) {
+                                this.favoriteAdTrack = favoriteAdTrack;
+                            }
+
+                            public Object getWebAdTrack() {
+                                return webAdTrack;
+                            }
+
+                            public void setWebAdTrack(Object webAdTrack) {
+                                this.webAdTrack = webAdTrack;
+                            }
+
+                            public long getDate() {
+                                return date;
+                            }
+
+                            public void setDate(long date) {
+                                this.date = date;
+                            }
+
+                            public Object getPromotion() {
+                                return promotion;
+                            }
+
+                            public void setPromotion(Object promotion) {
+                                this.promotion = promotion;
+                            }
+
+                            public Object getLabel() {
+                                return label;
+                            }
+
+                            public void setLabel(Object label) {
+                                this.label = label;
+                            }
+
+                            public String getDescriptionEditor() {
+                                return descriptionEditor;
+                            }
+
+                            public void setDescriptionEditor(String descriptionEditor) {
+                                this.descriptionEditor = descriptionEditor;
+                            }
+
+                            public boolean isCollected() {
+                                return collected;
+                            }
+
+                            public void setCollected(boolean collected) {
+                                this.collected = collected;
+                            }
+
+                            public boolean isReallyCollected() {
+                                return reallyCollected;
+                            }
+
+                            public void setReallyCollected(boolean reallyCollected) {
+                                this.reallyCollected = reallyCollected;
+                            }
+
+                            public boolean isPlayed() {
+                                return played;
+                            }
+
+                            public void setPlayed(boolean played) {
+                                this.played = played;
+                            }
+
+                            public Object getLastViewTime() {
+                                return lastViewTime;
+                            }
+
+                            public void setLastViewTime(Object lastViewTime) {
+                                this.lastViewTime = lastViewTime;
+                            }
+
+                            public Object getPlaylists() {
+                                return playlists;
+                            }
+
+                            public void setPlaylists(Object playlists) {
+                                this.playlists = playlists;
+                            }
+
+                            public Object getSrc() {
+                                return src;
+                            }
+
+                            public void setSrc(Object src) {
+                                this.src = src;
+                            }
+
+                            public Object getRecallSource() {
+                                return recallSource;
+                            }
+
+                            public void setRecallSource(Object recallSource) {
+                                this.recallSource = recallSource;
+                            }
+
+                            public List<TagsBean> getTags() {
+                                return tags;
+                            }
+
+                            public void setTags(List<TagsBean> tags) {
+                                this.tags = tags;
+                            }
+
+                            public List<PlayInfoBean> getPlayInfo() {
+                                return playInfo;
+                            }
+
+                            public void setPlayInfo(List<PlayInfoBean> playInfo) {
+                                this.playInfo = playInfo;
+                            }
+
+                            public List<?> getAdTrack() {
+                                return adTrack;
+                            }
+
+                            public void setAdTrack(List<?> adTrack) {
+                                this.adTrack = adTrack;
+                            }
+
+                            public List<?> getLabelList() {
+                                return labelList;
+                            }
+
+                            public void setLabelList(List<?> labelList) {
+                                this.labelList = labelList;
+                            }
+
+                            public List<?> getSubtitles() {
+                                return subtitles;
+                            }
+
+                            public void setSubtitles(List<?> subtitles) {
+                                this.subtitles = subtitles;
+                            }
+
+                            public static class ConsumptionBean {
+                                /**
+                                 * collectionCount : 119
+                                 * shareCount : 117
+                                 * replyCount : 3
+                                 * realCollectionCount : 67
+                                 */
+
+                                private int collectionCount;
+                                private int shareCount;
+                                private int replyCount;
+                                private int realCollectionCount;
+
+                                public int getCollectionCount() {
+                                    return collectionCount;
+                                }
+
+                                public void setCollectionCount(int collectionCount) {
+                                    this.collectionCount = collectionCount;
+                                }
+
+                                public int getShareCount() {
+                                    return shareCount;
+                                }
+
+                                public void setShareCount(int shareCount) {
+                                    this.shareCount = shareCount;
+                                }
+
+                                public int getReplyCount() {
+                                    return replyCount;
+                                }
+
+                                public void setReplyCount(int replyCount) {
+                                    this.replyCount = replyCount;
+                                }
+
+                                public int getRealCollectionCount() {
+                                    return realCollectionCount;
+                                }
+
+                                public void setRealCollectionCount(int realCollectionCount) {
+                                    this.realCollectionCount = realCollectionCount;
+                                }
+                            }
+
+                            public static class ProviderBean {
+                                /**
+                                 * name : YouTube
+                                 * alias : youtube
+                                 * icon : http://img.kaiyanapp.com/fa20228bc5b921e837156923a58713f6.png
+                                 */
+
+                                private String name;
+                                private String alias;
+                                private String icon;
+
+                                public String getName() {
+                                    return name;
+                                }
+
+                                public void setName(String name) {
+                                    this.name = name;
+                                }
+
+                                public String getAlias() {
+                                    return alias;
+                                }
+
+                                public void setAlias(String alias) {
+                                    this.alias = alias;
+                                }
+
+                                public String getIcon() {
+                                    return icon;
+                                }
+
+                                public void setIcon(String icon) {
+                                    this.icon = icon;
+                                }
+                            }
+
+                            public static class AuthorBean {
+                                /**
+                                 * id : 4458
+                                 * icon : http://img.kaiyanapp.com/2b775c7d05db341a5c834087d1e14bf0.png?imageMogr2/quality/60/format/jpg
+                                 * name : Comedy Central
+                                 * description : 喜剧中心是美国有线及卫星电视中的一个电视频道，专播喜剧及幽默节目。
+                                 * link :
+                                 * latestReleaseTime : 1590109214000
+                                 * videoNum : 24
+                                 * adTrack : null
+                                 * follow : {"itemType":"author","itemId":4458,"followed":false}
+                                 * shield : {"itemType":"author","itemId":4458,"shielded":false}
+                                 * approvedNotReadyVideoCount : 0
+                                 * ifPgc : true
+                                 * recSort : 0
+                                 * expert : false
+                                 */
+
+                                private int id;
+                                private String icon;
+                                private String name;
+                                private String description;
+                                private String link;
+                                private long latestReleaseTime;
+                                private int videoNum;
+                                private Object adTrack;
+                                private FollowBean follow;
+                                private ShieldBean shield;
+                                private int approvedNotReadyVideoCount;
+                                private boolean ifPgc;
+                                private int recSort;
+                                private boolean expert;
+
+                                public int getId() {
+                                    return id;
+                                }
+
+                                public void setId(int id) {
+                                    this.id = id;
+                                }
+
+                                public String getIcon() {
+                                    return icon;
+                                }
+
+                                public void setIcon(String icon) {
+                                    this.icon = icon;
+                                }
+
+                                public String getName() {
+                                    return name;
+                                }
+
+                                public void setName(String name) {
+                                    this.name = name;
+                                }
+
+                                public String getDescription() {
+                                    return description;
+                                }
+
+                                public void setDescription(String description) {
+                                    this.description = description;
+                                }
+
+                                public String getLink() {
+                                    return link;
+                                }
+
+                                public void setLink(String link) {
+                                    this.link = link;
+                                }
+
+                                public long getLatestReleaseTime() {
+                                    return latestReleaseTime;
+                                }
+
+                                public void setLatestReleaseTime(long latestReleaseTime) {
+                                    this.latestReleaseTime = latestReleaseTime;
+                                }
+
+                                public int getVideoNum() {
+                                    return videoNum;
+                                }
+
+                                public void setVideoNum(int videoNum) {
+                                    this.videoNum = videoNum;
+                                }
+
+                                public Object getAdTrack() {
+                                    return adTrack;
+                                }
+
+                                public void setAdTrack(Object adTrack) {
+                                    this.adTrack = adTrack;
+                                }
+
+                                public FollowBean getFollow() {
+                                    return follow;
+                                }
+
+                                public void setFollow(FollowBean follow) {
+                                    this.follow = follow;
+                                }
+
+                                public ShieldBean getShield() {
+                                    return shield;
+                                }
+
+                                public void setShield(ShieldBean shield) {
+                                    this.shield = shield;
+                                }
+
+                                public int getApprovedNotReadyVideoCount() {
+                                    return approvedNotReadyVideoCount;
+                                }
+
+                                public void setApprovedNotReadyVideoCount(int approvedNotReadyVideoCount) {
+                                    this.approvedNotReadyVideoCount = approvedNotReadyVideoCount;
+                                }
+
+                                public boolean isIfPgc() {
+                                    return ifPgc;
+                                }
+
+                                public void setIfPgc(boolean ifPgc) {
+                                    this.ifPgc = ifPgc;
+                                }
+
+                                public int getRecSort() {
+                                    return recSort;
+                                }
+
+                                public void setRecSort(int recSort) {
+                                    this.recSort = recSort;
+                                }
+
+                                public boolean isExpert() {
+                                    return expert;
+                                }
+
+                                public void setExpert(boolean expert) {
+                                    this.expert = expert;
+                                }
+
+                                public static class FollowBean {
+                                    /**
+                                     * itemType : author
+                                     * itemId : 4458
+                                     * followed : false
+                                     */
+
+                                    private String itemType;
+                                    private int itemId;
+                                    private boolean followed;
+
+                                    public String getItemType() {
+                                        return itemType;
+                                    }
+
+                                    public void setItemType(String itemType) {
+                                        this.itemType = itemType;
+                                    }
+
+                                    public int getItemId() {
+                                        return itemId;
+                                    }
+
+                                    public void setItemId(int itemId) {
+                                        this.itemId = itemId;
+                                    }
+
+                                    public boolean isFollowed() {
+                                        return followed;
+                                    }
+
+                                    public void setFollowed(boolean followed) {
+                                        this.followed = followed;
+                                    }
+                                }
+
+                                public static class ShieldBean {
+                                    /**
+                                     * itemType : author
+                                     * itemId : 4458
+                                     * shielded : false
+                                     */
+
+                                    private String itemType;
+                                    private int itemId;
+                                    private boolean shielded;
+
+                                    public String getItemType() {
+                                        return itemType;
+                                    }
+
+                                    public void setItemType(String itemType) {
+                                        this.itemType = itemType;
+                                    }
+
+                                    public int getItemId() {
+                                        return itemId;
+                                    }
+
+                                    public void setItemId(int itemId) {
+                                        this.itemId = itemId;
+                                    }
+
+                                    public boolean isShielded() {
+                                        return shielded;
+                                    }
+
+                                    public void setShielded(boolean shielded) {
+                                        this.shielded = shielded;
+                                    }
+                                }
+                            }
+
+                            public static class CoverBean {
+                                /**
+                                 * feed : http://img.kaiyanapp.com/3abce77a2ebfba269e83293a91b37182.jpeg?imageMogr2/quality/60/format/jpg
+                                 * detail : http://img.kaiyanapp.com/3abce77a2ebfba269e83293a91b37182.jpeg?imageMogr2/quality/60/format/jpg
+                                 * blurred : http://img.kaiyanapp.com/989bfa1ccaea0a248dfd91f9ad6fe870.jpeg?imageMogr2/quality/60/format/jpg
+                                 * sharing : null
+                                 * homepage : http://img.kaiyanapp.com/3abce77a2ebfba269e83293a91b37182.jpeg?imageView2/1/w/720/h/560/format/jpg/q/75|watermark/1/image/aHR0cDovL2ltZy5rYWl5YW5hcHAuY29tL2JsYWNrXzMwLnBuZw==/dissolve/100/gravity/Center/dx/0/dy/0|imageslim
+                                 */
+
+                                private String feed;
+                                private String detail;
+                                private String blurred;
+                                private Object sharing;
+                                private String homepage;
+
+                                public String getFeed() {
+                                    return feed;
+                                }
+
+                                public void setFeed(String feed) {
+                                    this.feed = feed;
+                                }
+
+                                public String getDetail() {
+                                    return detail;
+                                }
+
+                                public void setDetail(String detail) {
+                                    this.detail = detail;
+                                }
+
+                                public String getBlurred() {
+                                    return blurred;
+                                }
+
+                                public void setBlurred(String blurred) {
+                                    this.blurred = blurred;
+                                }
+
+                                public Object getSharing() {
+                                    return sharing;
+                                }
+
+                                public void setSharing(Object sharing) {
+                                    this.sharing = sharing;
+                                }
+
+                                public String getHomepage() {
+                                    return homepage;
+                                }
+
+                                public void setHomepage(String homepage) {
+                                    this.homepage = homepage;
+                                }
+                            }
+
+                            public static class WebUrlBean {
+                                /**
+                                 * raw : http://www.eyepetizer.net/detail.html?vid=195012
+                                 * forWeibo : http://www.eyepetizer.net/detail.html?vid=195012&resourceType=video&utm_campaign=routine&utm_medium=share&utm_source=weibo&uid=0
+                                 */
+
+                                private String raw;
+                                private String forWeibo;
+
+                                public String getRaw() {
+                                    return raw;
+                                }
+
+                                public void setRaw(String raw) {
+                                    this.raw = raw;
+                                }
+
+                                public String getForWeibo() {
+                                    return forWeibo;
+                                }
+
+                                public void setForWeibo(String forWeibo) {
+                                    this.forWeibo = forWeibo;
+                                }
+                            }
+
+                            public static class TagsBean {
+                                /**
+                                 * id : 504
+                                 * name : 笑cry
+                                 * actionUrl : eyepetizer://tag/504/?title=%E7%AC%91cry
+                                 * adTrack : null
+                                 * desc : null
+                                 * bgPicture : http://img.kaiyanapp.com/3d3cb19d13cc16e8c3c2eddb12284fa3.jpeg?imageMogr2/quality/100
+                                 * headerImage : http://img.kaiyanapp.com/177986653f12273f6d55edafe856ffe3.jpeg?imageMogr2/quality/100
+                                 * tagRecType : NORMAL
+                                 * childTagList : null
+                                 * childTagIdList : null
+                                 * haveReward : false
+                                 * ifNewest : false
+                                 * newestEndTime : null
+                                 * communityIndex : 0
+                                 */
+
+                                private int id;
+                                private String name;
+                                private String actionUrl;
+                                private Object adTrack;
+                                private Object desc;
+                                private String bgPicture;
+                                private String headerImage;
+                                private String tagRecType;
+                                private Object childTagList;
+                                private Object childTagIdList;
+                                private boolean haveReward;
+                                private boolean ifNewest;
+                                private Object newestEndTime;
+                                private int communityIndex;
+
+                                public int getId() {
+                                    return id;
+                                }
+
+                                public void setId(int id) {
+                                    this.id = id;
+                                }
+
+                                public String getName() {
+                                    return name;
+                                }
+
+                                public void setName(String name) {
+                                    this.name = name;
+                                }
+
+                                public String getActionUrl() {
+                                    return actionUrl;
+                                }
+
+                                public void setActionUrl(String actionUrl) {
+                                    this.actionUrl = actionUrl;
+                                }
+
+                                public Object getAdTrack() {
+                                    return adTrack;
+                                }
+
+                                public void setAdTrack(Object adTrack) {
+                                    this.adTrack = adTrack;
+                                }
+
+                                public Object getDesc() {
+                                    return desc;
+                                }
+
+                                public void setDesc(Object desc) {
+                                    this.desc = desc;
+                                }
+
+                                public String getBgPicture() {
+                                    return bgPicture;
+                                }
+
+                                public void setBgPicture(String bgPicture) {
+                                    this.bgPicture = bgPicture;
+                                }
+
+                                public String getHeaderImage() {
+                                    return headerImage;
+                                }
+
+                                public void setHeaderImage(String headerImage) {
+                                    this.headerImage = headerImage;
+                                }
+
+                                public String getTagRecType() {
+                                    return tagRecType;
+                                }
+
+                                public void setTagRecType(String tagRecType) {
+                                    this.tagRecType = tagRecType;
+                                }
+
+                                public Object getChildTagList() {
+                                    return childTagList;
+                                }
+
+                                public void setChildTagList(Object childTagList) {
+                                    this.childTagList = childTagList;
+                                }
+
+                                public Object getChildTagIdList() {
+                                    return childTagIdList;
+                                }
+
+                                public void setChildTagIdList(Object childTagIdList) {
+                                    this.childTagIdList = childTagIdList;
+                                }
+
+                                public boolean isHaveReward() {
+                                    return haveReward;
+                                }
+
+                                public void setHaveReward(boolean haveReward) {
+                                    this.haveReward = haveReward;
+                                }
+
+                                public boolean isIfNewest() {
+                                    return ifNewest;
+                                }
+
+                                public void setIfNewest(boolean ifNewest) {
+                                    this.ifNewest = ifNewest;
+                                }
+
+                                public Object getNewestEndTime() {
+                                    return newestEndTime;
+                                }
+
+                                public void setNewestEndTime(Object newestEndTime) {
+                                    this.newestEndTime = newestEndTime;
+                                }
+
+                                public int getCommunityIndex() {
+                                    return communityIndex;
+                                }
+
+                                public void setCommunityIndex(int communityIndex) {
+                                    this.communityIndex = communityIndex;
+                                }
+                            }
+
+                            public static class PlayInfoBean {
+                                /**
+                                 * height : 720
+                                 * width : 1280
+                                 * urlList : [{"name":"aliyun","url":"http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=high&source=aliyun&playUrlType=url_oss","size":39115616},{"name":"ucloud","url":"http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=high&source=ucloud&playUrlType=url_oss","size":39115616}]
+                                 * name : 高清
+                                 * type : high
+                                 * url : http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=high&source=aliyun&playUrlType=url_oss
+                                 */
+
+                                private int height;
+                                private int width;
+                                private String name;
+                                private String type;
+                                private String url;
+                                private List<UrlListBean> urlList;
+
+                                public int getHeight() {
+                                    return height;
+                                }
+
+                                public void setHeight(int height) {
+                                    this.height = height;
+                                }
+
+                                public int getWidth() {
+                                    return width;
+                                }
+
+                                public void setWidth(int width) {
+                                    this.width = width;
+                                }
+
+                                public String getName() {
+                                    return name;
+                                }
+
+                                public void setName(String name) {
+                                    this.name = name;
+                                }
+
+                                public String getType() {
+                                    return type;
+                                }
+
+                                public void setType(String type) {
+                                    this.type = type;
+                                }
+
+                                public String getUrl() {
+                                    return url;
+                                }
+
+                                public void setUrl(String url) {
+                                    this.url = url;
+                                }
+
+                                public List<UrlListBean> getUrlList() {
+                                    return urlList;
+                                }
+
+                                public void setUrlList(List<UrlListBean> urlList) {
+                                    this.urlList = urlList;
+                                }
+
+                                public static class UrlListBean {
+                                    /**
+                                     * name : aliyun
+                                     * url : http://baobab.kaiyanapp.com/api/v1/playUrl?vid=195012&resourceType=video&editionType=high&source=aliyun&playUrlType=url_oss
+                                     * size : 39115616
+                                     */
+
+                                    private String name;
+                                    private String url;
+                                    private int size;
+
+                                    public String getName() {
+                                        return name;
+                                    }
+
+                                    public void setName(String name) {
+                                        this.name = name;
+                                    }
+
+                                    public String getUrl() {
+                                        return url;
+                                    }
+
+                                    public void setUrl(String url) {
+                                        this.url = url;
+                                    }
+
+                                    public int getSize() {
+                                        return size;
+                                    }
+
+                                    public void setSize(int size) {
+                                        this.size = size;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
     }

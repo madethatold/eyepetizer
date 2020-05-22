@@ -16,14 +16,15 @@ import java.util.List;
 public class MyBannerAdapter extends BannerAdapter<FindMoreModel.ItemListBeanX.DataBeanX.ItemListBean, MyBannerAdapter.BannerViewHolder> {
 
     private Context context;
+
     public MyBannerAdapter(List<FindMoreModel.ItemListBeanX.DataBeanX.ItemListBean> datas) {
         super(datas);
     }
 
     @Override
     public BannerViewHolder onCreateHolder(ViewGroup parent, int viewType) {
-        if(context==null){
-            context=parent.getContext();
+        if (context == null) {
+            context = parent.getContext();
         }
         ImageView imageView = new ImageView(parent.getContext());
         imageView.setLayoutParams(new ViewGroup.LayoutParams(
@@ -32,7 +33,6 @@ public class MyBannerAdapter extends BannerAdapter<FindMoreModel.ItemListBeanX.D
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return new BannerViewHolder(imageView);
     }
-
 
 
     @Override

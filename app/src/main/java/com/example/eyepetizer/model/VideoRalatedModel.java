@@ -73,7 +73,7 @@ public class VideoRalatedModel {
             this.id = id;
         }
 
-        public static class DataBean{
+        public static class DataBean {
             private String text;
             private String dataType;
             private int id;

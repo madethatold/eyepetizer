@@ -1,15 +1,29 @@
 package com.example.eyepetizer.util;
 
-import java.util.Queue;
-
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 public class HttpUtil {
-    public static void sendHttpRequest(String address, Callback callback){
-        OkHttpClient client=new OkHttpClient();
-        Request request=new Request.Builder().url(address).build();
-        client.newCall(request).enqueue(callback);
+    private static OkHttpClient singleton;
+
+    private HttpUtil() {
+
     }
+
+    public static OkHttpClient getInstance() {
+        if (singleton == null) {
+            synchronized (HttpUtil.class) {
+                if (singleton == null) {
+                    singleton = new OkHttpClient();
+                }
+            }
+        }
+        return singleton;
+    }
+
+
+//    public static void sendHttpRequest(String address, Callback callback){
+//        OkHttpClient client=new OkHttpClient();
+//        Request request=new Request.Builder().url(address).build();
+//        client.newCall(request).enqueue(callback);
+//    }
 }

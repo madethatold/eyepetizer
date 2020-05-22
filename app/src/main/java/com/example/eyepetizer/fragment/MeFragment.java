@@ -14,21 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.eyepetizer.R;
-import com.example.eyepetizer.User;
 import com.example.eyepetizer.activity.LoginActivity;
-import com.example.eyepetizer.activity.MainActivity;
 import com.example.eyepetizer.util.SharedPUtil;
-import com.example.eyepetizer.util.ToastUtil;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MeFragment extends Fragment implements View.OnClickListener{
-    private Button btnHistory,btnBadge,btnNotice,btnWriter,btnOffline,btnMyFollow;
-    private LinearLayout llStar,llLoad;
+public class MeFragment extends Fragment implements View.OnClickListener {
+    private Button btnHistory, btnBadge, btnNotice, btnWriter, btnOffline, btnMyFollow;
+    private LinearLayout llStar, llLoad;
     private CircleImageView imagHead;
-    private TextView tvMyPage,userName;
+    private TextView tvMyPage, userName;
 
     private View view;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,30 +36,30 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
-    private void initview(){
-        btnBadge=view.findViewById(R.id.btn_my_badge);
-        btnHistory=view.findViewById(R.id.btn_history);
-        btnNotice=view.findViewById(R.id.btn_set_notification);
-        btnWriter=view.findViewById(R.id.btn_writer);
-        btnOffline=view.findViewById(R.id.btn_offline);
-        btnMyFollow=view.findViewById(R.id.btn_my_follow);
+    private void initview() {
+        btnBadge = view.findViewById(R.id.btn_my_badge);
+        btnHistory = view.findViewById(R.id.btn_history);
+        btnNotice = view.findViewById(R.id.btn_set_notification);
+        btnWriter = view.findViewById(R.id.btn_writer);
+        btnOffline = view.findViewById(R.id.btn_offline);
+        btnMyFollow = view.findViewById(R.id.btn_my_follow);
 
-        llLoad=view.findViewById(R.id.load);
-        llStar=view.findViewById(R.id.star);
+        llLoad = view.findViewById(R.id.load);
+        llStar = view.findViewById(R.id.star);
 
-        imagHead=view.findViewById(R.id.imag_head);
+        imagHead = view.findViewById(R.id.imag_head);
 
-        tvMyPage=view.findViewById(R.id.intoMyPage);
-        userName=view.findViewById(R.id.username);
+        tvMyPage = view.findViewById(R.id.intoMyPage);
+        userName = view.findViewById(R.id.username);
 
         imagHead.setImageResource(R.drawable.default_head);
-        String name= (String) SharedPUtil.getParam(getContext(),SharedPUtil.LOGIN_DATA,"");
+        String name = (String) SharedPUtil.getParam(getContext(), SharedPUtil.LOGIN_DATA, "");
         userName.setText(name);
 
 
     }
 
-    private void setOnClick(){
+    private void setOnClick() {
         btnBadge.setOnClickListener(this);
         btnWriter.setOnClickListener(this);
         btnMyFollow.setOnClickListener(this);
@@ -77,7 +75,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_offline:
                 SharedPUtil.setParam(getContext(), SharedPUtil.IS_LOGIN, false);
                 SharedPUtil.removeParam(getContext(), SharedPUtil.LOGIN_DATA);

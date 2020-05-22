@@ -1,7 +1,6 @@
 package com.example.eyepetizer.adapter;
 
 import android.content.Context;
-import android.icu.text.MessagePattern;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +15,15 @@ import com.bumptech.glide.Glide;
 import com.example.eyepetizer.databinding.ItemBannerBinding;
 import com.example.eyepetizer.databinding.ItemBriefCardBinding;
 import com.example.eyepetizer.databinding.ItemBriefTagBinding;
-import com.example.eyepetizer.databinding.ItemCardViewBinding;
 import com.example.eyepetizer.databinding.ItemColumnBinding;
-import com.example.eyepetizer.databinding.ItemTitleBinding;
 import com.example.eyepetizer.databinding.ItemTitleTagBinding;
-import com.example.eyepetizer.databinding.ItemTopBannerBinding;
 import com.example.eyepetizer.model.FindMoreModel;
 import com.youth.banner.Banner;
 import com.youth.banner.indicator.CircleIndicator;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FindMoreAdapter extends RecyclerView.Adapter {
     private static final int TITLE=1;
@@ -33,6 +31,7 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
     private static final int BANNER=3;
     private static final int COLUMN=4;
     private static final int TAG=5;
+
 
     private Context context;
     List<FindMoreModel.ItemListBeanX> itemListBeanXList;
@@ -158,11 +157,11 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
                     .setIndicator(new CircleIndicator(context))
                     .start();
         }else {
-            ((ColumnHolder)holder).tvTitle.setText(dataBeanX.getHeader().getTitle());
-            Glide.with(context).load(dataBeanX.getItemList().get(0).getData().getImage()).into(((ColumnHolder)holder).img1);
-            Glide.with(context).load(dataBeanX.getItemList().get(1).getData().getImage()).into(((ColumnHolder)holder).img2);
-            Glide.with(context).load(dataBeanX.getItemList().get(2).getData().getImage()).into(((ColumnHolder)holder).img3);
-            Glide.with(context).load(dataBeanX.getItemList().get(3).getData().getImage()).into(((ColumnHolder)holder).img4);
+//            ((ColumnHolder)holder).tvTitle.setText(dataBeanX.getHeader().getTitle());
+//            Glide.with(context).load(dataBeanX.getItemList().get(0).getData().getImage()).into(((ColumnHolder)holder).img1);
+//            Glide.with(context).load(dataBeanX.getItemList().get(1).getData().getImage()).into(((ColumnHolder)holder).img2);
+//            Glide.with(context).load(dataBeanX.getItemList().get(2).getData().getImage()).into(((ColumnHolder)holder).img3);
+//            Glide.with(context).load(dataBeanX.getItemList().get(3).getData().getImage()).into(((ColumnHolder)holder).img4);
 
         }
     }
