@@ -6,23 +6,27 @@
     android:orientation="vertical">
 
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_margin="5dp">
+        android:layout_height="220dp">
 
-        <VideoView
+        <com.example.eyepetizer.CustomVideoView
             android:id="@+id/video_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             />
 
     </RelativeLayout>
 
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:id="@+id/ll_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

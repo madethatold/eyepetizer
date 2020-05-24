@@ -1,14 +1,22 @@
 package com.example.eyepetizer.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.eyepetizer.adapter.VideoDetailAdapter;
 import com.example.eyepetizer.databinding.ActivityVideoDetailBinding;
 import com.example.eyepetizer.model.CommentModel;
@@ -18,6 +26,8 @@ import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +80,21 @@ public class VideoDetailActivity extends AppCompatActivity {
     }
 
     private void initview() {
+
+        Glide.with(VideoDetailActivity.this)
+                .asBitmap()
+                .load(blurred)
+                .into(new SimpleTarget<Bitmap>() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        Drawable drawable = new BitmapDrawable(resource);
+                        binding.llView.setBackground(drawable);
+                    }
+
+                });
+
+
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
         adapter = new VideoDetailAdapter(videoDataList, head, title, desc, name, collect, share);
         binding.rvList.setAdapter(adapter);
@@ -88,9 +113,31 @@ public class VideoDetailActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
-    private void receive() {
+    private Drawable loadImageFromNetwork(String imageUrl)
+    {
+        Drawable drawable = null;
+        try {
+            // 可以在这里通过文件名来判断，是否本地有此图片
+            drawable = Drawable.createFromStream(
+                    new URL(imageUrl).openStream(), "image.jpg");
+        } catch (IOException e) {
+            Log.d("test", e.getMessage());
+        }
+        if (drawable == null) {
+            Log.d("test", "null drawable");
+        } else {
+            Log.d("test", "not null drawable");
+        }
+
+        return drawable ;
+    }
+
+
+        private void receive() {
         head = getIntent().getStringExtra("head");
         title = getIntent().getStringExtra("title");
         name = getIntent().getStringExtra("name");
@@ -164,5 +211,7 @@ public class VideoDetailActivity extends AppCompatActivity {
 //        }
 
     }
+
+
 
 }

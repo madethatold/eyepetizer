@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.eyepetizer.activity.VideoDetailActivity;
 import com.example.eyepetizer.databinding.ItemDetailCardBinding;
 import com.example.eyepetizer.databinding.ItemDetailHeaderBinding;
@@ -102,7 +106,7 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
             tvCollection = itemView.tvCollectionCount;
             tvDescription = itemView.tvDescription;
             tvLoad = itemView.tvDownload;
-            tvName = itemView.tvName;
+            tvName = itemView.tvNikeName;
             tvShare = itemView.tvShareCount;
             tvStar = itemView.ivStar;
             tvTitle = itemView.tvVideoTitle;
@@ -139,10 +143,19 @@ public class VideoDetailAdapter extends RecyclerView.Adapter {
         if (position == 0) {
             ((HeaderHolder) holder).tvTitle.setText(title);
             ((HeaderHolder) holder).tvDescription.setText(desc);
+
+            //淡入淡出动画
+            AnimationSet animationSet = new AnimationSet(true);
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+            alphaAnimation.setDuration(3000);
+            animationSet.addAnimation(alphaAnimation);
+            ((HeaderHolder) holder).tvDescription.startAnimation(animationSet);
+            ((HeaderHolder) holder).tvTitle.startAnimation(animationSet);
+
             ((HeaderHolder) holder).tvShare.setText(share + "");
             ((HeaderHolder) holder).tvCollection.setText(collect + "");
             ((HeaderHolder) holder).tvName.setText(name);
-            Glide.with(context).load(head).into(((HeaderHolder) holder).imgHead);
+            Glide.with(context).load(head).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(((HeaderHolder) holder).imgHead);
         }
         if (position > 0) {
             VideoRalatedModel.ItemListBean.DataBean dataVBean = videoList.get(position - 1);

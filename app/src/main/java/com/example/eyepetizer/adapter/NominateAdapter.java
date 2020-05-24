@@ -294,7 +294,7 @@ public class NominateAdapter extends RecyclerView.Adapter {
                     blurred = bean1.getContent().getData().getCover().getBlurred();
                     id = bean1.getContent().getData().getId();
                     head = bean1.getHeader().getIcon();
-                    name = bean1.getHeader().getTitle();
+                    name = bean.getHeader().getTitle();
                     title = bean1.getContent().getData().getTitle();
                     desc = bean1.getContent().getData().getDescription();
                     collect = bean1.getContent().getData().getConsumption().getCollectionCount();
@@ -320,7 +320,7 @@ public class NominateAdapter extends RecyclerView.Adapter {
                     blurred = bean2.getContent().getData().getCover().getBlurred();
                     id = bean2.getContent().getData().getId();
                     head = bean2.getHeader().getIcon();
-                    name = bean2.getHeader().getTitle();
+                    name = bean.getHeader().getTitle();
                     title = bean2.getContent().getData().getTitle();
                     desc = bean2.getContent().getData().getDescription();
                     collect = bean2.getContent().getData().getConsumption().getCollectionCount();
