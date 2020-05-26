@@ -19,6 +19,7 @@ import com.example.eyepetizer.util.HttpUtil;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ public class NominateFragment extends Fragment {
     private FragmentNominateBinding binding;
     private String nextUrl;
     private NominateAdapter adapter;
-
     private List<NominateModel.ItemListBean> itemEntityList = new ArrayList<>();
     private List<NominateModel.ItemListBean.DataBean> dataEntityList = new ArrayList<>();
 
@@ -40,21 +40,29 @@ public class NominateFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentNominateBinding.inflate(getLayoutInflater());
         downLoad(API.NOMINATE);
+        initview();
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                binding.refreshLayout.finishRefresh(1000);
+            }
+        });
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                downLoad(nextUrl);
+                binding.refreshLayout.finishLoadMore(1000);
+            }
+        });
         return binding.getRoot();
     }
 
     private void initview() {
-        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                downLoad(nextUrl);
-            }
-        });
-
         //为recyclerView设置Adapter
         binding.rvNominate.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         adapter = new NominateAdapter(itemEntityList, dataEntityList);
         binding.rvNominate.setAdapter(adapter);
+
         Log.d(TAG, "initview: " + itemEntityList.size() + "---" + dataEntityList.size());
     }
 
@@ -64,22 +72,13 @@ public class NominateFragment extends Fragment {
             @Override
             public void run() {
                 try {
-
 //                    OkHttpClient client=new OkHttpClient();
                     Request request = new Request.Builder()
                             .url(url)
                             .build();
                     Response response = HttpUtil.getInstance().newCall(request).execute();
                     String responseData = response.body().string();
-
                     parseJSONWithGSON(responseData);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initview();
-                        }
-                    });
-                    adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -89,20 +88,24 @@ public class NominateFragment extends Fragment {
 
     //json转换为实体类
     private void parseJSONWithGSON(String jsonData) {
-
-
         Gson gson = new Gson();
         NominateModel nominateModel = gson.fromJson(jsonData, NominateModel.class);
         nextUrl = nominateModel.getNextPageUrl();
-        Log.d(TAG, "parseJSONWithGSON: " + nextUrl);
-        itemEntityList = nominateModel.getItemList();
 
-        for (NominateModel.ItemListBean bean : itemEntityList) {
-            dataEntityList.add(bean.getData());
+        List<NominateModel.ItemListBean> list1 = nominateModel.getItemList();
+        List<NominateModel.ItemListBean.DataBean> list2=new ArrayList<>();
+        for (NominateModel.ItemListBean bean : list1) {
+            list2.add(bean.getData());
         }
 
         Log.d(TAG, "parseJSONWithGSON: " + itemEntityList.size() + "     " + dataEntityList.size());
-        Log.d(TAG, "parseJSONWithGSON: "+dataEntityList.get(0).getDataType());
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.add(list1,list2);
+            }
+        });
     }
 }
 

@@ -16,6 +16,8 @@ import com.example.eyepetizer.model.FollowModel;
 import com.example.eyepetizer.networks.API;
 import com.example.eyepetizer.util.HttpUtil;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,6 @@ public class FollowFragment extends Fragment {
     private FragmentFollowBinding binding;
     private static String TAG="_____________________FOLLOW";
     private FollowAdapter adapter;
-
-    private List<FollowModel.ItemListBean> itemListBeans=new ArrayList<>();
     private List<FollowModel.ItemListBean.DataBeanX> dataBeanXList=new ArrayList<>();
     private String nextPageUrl;
 
@@ -40,6 +40,14 @@ public class FollowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentFollowBinding.inflate(getLayoutInflater());
         downLoad(API.FOLLOW);
+        initview();
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                downLoad(nextPageUrl);
+                binding.refreshLayout.finishLoadMore(1000);
+            }
+        });
         return binding.getRoot();
     }
 
@@ -55,7 +63,6 @@ public class FollowFragment extends Fragment {
             @Override
             public void run() {
                 try {
-
 //                    OkHttpClient client=new OkHttpClient();
                     Request request = new Request.Builder()
                             .url(url)
@@ -63,13 +70,6 @@ public class FollowFragment extends Fragment {
                     Response response = HttpUtil.getInstance().newCall(request).execute();
                     String responseData = response.body().string();
                     parseJSONWithGSON(responseData);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initview();
-                        }
-                    });
-                    adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,10 +82,19 @@ public class FollowFragment extends Fragment {
         Gson gson = new Gson();
         FollowModel followModel=gson.fromJson(jsonData,FollowModel.class);
         nextPageUrl=followModel.getNextPageUrl();
-        itemListBeans=followModel.getItemList();
-        for(FollowModel.ItemListBean bean:itemListBeans){
-            dataBeanXList.add(bean.getData());
+        List<FollowModel.ItemListBean> list1=new ArrayList<>();
+        List<FollowModel.ItemListBean.DataBeanX> list2=new ArrayList<>();
+        list1=followModel.getItemList();
+        for(FollowModel.ItemListBean bean:list1){
+            list2.add(bean.getData());
         }
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.add(list2);
+            }
+        });
 
 
     }

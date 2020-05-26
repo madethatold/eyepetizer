@@ -23,8 +23,6 @@ import com.youth.banner.indicator.CircleIndicator;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class FindMoreAdapter extends RecyclerView.Adapter {
     private static final int TITLE=1;
     private static final int BRIEF=2;
@@ -157,11 +155,11 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
                     .setIndicator(new CircleIndicator(context))
                     .start();
         }else {
-//            ((ColumnHolder)holder).tvTitle.setText(dataBeanX.getHeader().getTitle());
-//            Glide.with(context).load(dataBeanX.getItemList().get(0).getData().getImage()).into(((ColumnHolder)holder).img1);
-//            Glide.with(context).load(dataBeanX.getItemList().get(1).getData().getImage()).into(((ColumnHolder)holder).img2);
-//            Glide.with(context).load(dataBeanX.getItemList().get(2).getData().getImage()).into(((ColumnHolder)holder).img3);
-//            Glide.with(context).load(dataBeanX.getItemList().get(3).getData().getImage()).into(((ColumnHolder)holder).img4);
+            ((ColumnHolder)holder).tvTitle.setText(dataBeanX.getHeader().getTitle());
+            Glide.with(context).load(dataBeanX.getItemList().get(0).getData().getImage()).into(((ColumnHolder)holder).img1);
+            Glide.with(context).load(dataBeanX.getItemList().get(1).getData().getImage()).into(((ColumnHolder)holder).img2);
+            Glide.with(context).load(dataBeanX.getItemList().get(2).getData().getImage()).into(((ColumnHolder)holder).img3);
+            Glide.with(context).load(dataBeanX.getItemList().get(3).getData().getImage()).into(((ColumnHolder)holder).img4);
 
         }
     }

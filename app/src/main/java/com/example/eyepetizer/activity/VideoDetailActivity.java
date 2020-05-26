@@ -39,7 +39,6 @@ public class VideoDetailActivity extends AppCompatActivity {
     private static String TAG = "oooooooooooooooooooVideoDetail";
 
     private ActivityVideoDetailBinding binding;
-//    List<CommentModel.ItemListBean> commentList = new ArrayList<>();
     List<CommentModel.ItemListBean.DataBean> commentDataList = new ArrayList<>();
     List<VideoRalatedModel.ItemListBean> videoList = new ArrayList<>();
     List<VideoRalatedModel.ItemListBean.DataBean> videoDataList = new ArrayList<>();
@@ -64,6 +63,7 @@ public class VideoDetailActivity extends AppCompatActivity {
         binding = ActivityVideoDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         receive();
+        initRefresh();
         String commentAPI = API.COMMENT + id + "";
         String videoAPI = API.RELATED + id + "";
         downLoad(videoAPI, commentAPI);
@@ -77,6 +77,16 @@ public class VideoDetailActivity extends AppCompatActivity {
         String videoAPI = API.RELATED + id + "";
         downLoad(videoAPI, commentAPI);
         super.onNewIntent(intent);
+    }
+
+    private void initRefresh(){
+        binding.refreshLayout.setEnableLoadMore(false);
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                finish();
+            }
+        });
     }
 
     private void initview() {
@@ -105,16 +115,6 @@ public class VideoDetailActivity extends AppCompatActivity {
         binding.videoView.setMediaController(mediaController);
         binding.videoView.requestFocus();
         binding.videoView.start();
-
-        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                finish();
-            }
-        });
-
-
-
     }
 
     private Drawable loadImageFromNetwork(String imageUrl)
@@ -203,12 +203,6 @@ public class VideoDetailActivity extends AppCompatActivity {
         for (VideoRalatedModel.ItemListBean bean : videoList) {
             videoDataList.add(bean.getData());
         }
-
-//        CommentModel commentModel=gson.fromJson(jsonData2,CommentModel.class);
-//        commentList=commentModel.getItemList();
-//        for (CommentModel.ItemListBean bean:commentList){
-//            commentDataList.add(bean.getData());
-//        }
 
     }
 

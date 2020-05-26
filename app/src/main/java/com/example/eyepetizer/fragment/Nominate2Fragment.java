@@ -18,6 +18,7 @@ import com.example.eyepetizer.util.HttpUtil;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class Nominate2Fragment extends Fragment {
     private static String TAG = ".....................Nominate2";
     private FragmentNominate2Binding binding;
     private Nominate2Adapter adapter;
+    private String nextpageUrl;
     private List<Nominate2Model.ItemListBeanX> itemListBeanXList=new ArrayList<>();
     private List<Nominate2Model.ItemListBeanX.DataBeanX> dataBeanXList=new ArrayList<>();
     @Nullable
@@ -36,16 +38,24 @@ public class Nominate2Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentNominate2Binding.inflate(getLayoutInflater());
         downLoad(API.NOMINATE2);
+        initview();
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                downLoad(nextpageUrl);
+                binding.refreshLayout.finishLoadMore(1000);
+            }
+        });
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                binding.refreshLayout.finishRefresh(1000);
+            }
+        });
         return binding.getRoot();
     }
 
     private void initview(){
-        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
-            }
-        });
         StaggeredGridLayoutManager manager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         binding.rvNominate2.setLayoutManager(manager);
@@ -69,13 +79,6 @@ public class Nominate2Fragment extends Fragment {
                     Response response = HttpUtil.getInstance().newCall(request).execute();
                     String responseData = response.body().string();
                     parseJSONWithGSON(responseData);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initview();
-                        }
-                    });
-                    adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -87,11 +90,19 @@ public class Nominate2Fragment extends Fragment {
     private void parseJSONWithGSON(String jsonData) {
         Gson gson = new Gson();
         Nominate2Model model=gson.fromJson(jsonData,Nominate2Model.class);
-        String nextpageUrl=model.getNextPageUrl();
-        itemListBeanXList=model.getItemList();
-        for (Nominate2Model.ItemListBeanX beanX:itemListBeanXList){
-            dataBeanXList.add(beanX.getData());
+        nextpageUrl=model.getNextPageUrl();
+        List<Nominate2Model.ItemListBeanX> list1=model.getItemList();
+        List<Nominate2Model.ItemListBeanX.DataBeanX> list2=new ArrayList<>();
+        for (Nominate2Model.ItemListBeanX beanX:list1){
+            list2.add(beanX.getData());
         }
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.add(list1,list2);
+            }
+        });
 
     }
 

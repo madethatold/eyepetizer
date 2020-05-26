@@ -72,4 +72,19 @@ public class FollowAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return dataBeanXList.size();
     }
+
+    //    下面两个方法提供给页面刷新和加载时调用
+    public void add(List<FollowModel.ItemListBean.DataBeanX> addList) {
+        //增加数据
+        int position = dataBeanXList.size();
+        dataBeanXList.addAll(position, addList);
+        notifyItemInserted(position);
+    }
+
+    public void refresh(List<FollowModel.ItemListBean.DataBeanX> newList) {
+        //刷新数据
+        dataBeanXList.removeAll(dataBeanXList);
+        dataBeanXList.addAll(newList);
+        notifyDataSetChanged();
+    }
 }

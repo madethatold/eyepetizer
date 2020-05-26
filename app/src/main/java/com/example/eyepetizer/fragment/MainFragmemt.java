@@ -33,6 +33,7 @@ public class MainFragmemt extends Fragment {
                 .create());
         binding.viewpager.setAdapter(adapter);
         binding.tabLayout.setupWithViewPager(binding.viewpager);
+        binding.tabLayout.getTabAt(1).select();
 
     }
 }

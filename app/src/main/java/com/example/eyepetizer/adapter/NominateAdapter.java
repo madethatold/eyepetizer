@@ -371,4 +371,22 @@ public class NominateAdapter extends RecyclerView.Adapter {
         }
         return SQUARE;
     }
+
+    //    下面两个方法提供给页面刷新和加载时调用
+    public void add(List<NominateModel.ItemListBean> addList1, List<NominateModel.ItemListBean.DataBean> addList2) {
+        //增加数据
+        int position = itemEntityList.size();
+        itemEntityList.addAll(position, addList1);
+        dataEntityList.addAll(position, addList2);
+        notifyItemInserted(position);
+    }
+
+    public void refresh(List<NominateModel.ItemListBean> newList1, List<NominateModel.ItemListBean.DataBean> newList2) {
+        //刷新数据
+        itemEntityList.removeAll(itemEntityList);
+        dataEntityList.removeAll(dataEntityList);
+        itemEntityList.addAll(newList1);
+        dataEntityList.addAll(newList2);
+        notifyDataSetChanged();
+    }
 }
