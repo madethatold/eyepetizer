@@ -33,12 +33,25 @@ public class DailyFragment extends Fragment {
     private List<DailyModel.itemEntity> itemEntities = new ArrayList<>();
     private String nextUrl;
     private DailyAdapter adapter;
+    private boolean isload = true;
+    private List<DailyModel.itemEntity.DataEntity> list2 = new ArrayList<>();
+    private List<DailyModel.itemEntity> list1 = new ArrayList<>();
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDailyBinding.inflate(getLayoutInflater());
         downLoad(API.DAILY);
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                downLoad(nextUrl);
+                Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + list1.size() + " " + list2.size());
+                adapter.add(list1,list2);
+                binding.refreshLayout.finishLoadMore(1000);
+            }
+        });
         return binding.getRoot();
     }
 
@@ -48,20 +61,6 @@ public class DailyFragment extends Fragment {
     }
 
     private void initview() {
-        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                downLoad(nextUrl);
-//                adapter.add(itemEntities,dataList);
-//                binding.refreshLayout.finishLoadMore(1000);
-
-            }
-        });
-
-        //dataList初始化
-        for (DailyModel.itemEntity entity : itemEntities) {
-            dataList.add(entity.getDataEntity());
-        }
 
         //为recyclerView设置Adapter
         binding.rvDaily.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -69,6 +68,7 @@ public class DailyFragment extends Fragment {
         binding.rvDaily.setAdapter(adapter);
 
         Log.d(TAG, "initview: " + itemEntities.size() + "      " + dataList.size());
+        isload=false;
     }
 
     //网络请求
@@ -77,21 +77,21 @@ public class DailyFragment extends Fragment {
             @Override
             public void run() {
                 try {
-
-//                    OkHttpClient client=new OkHttpClient();
                     Request request = new Request.Builder()
                             .url(url)
                             .build();
                     Response response = HttpUtil.getInstance().newCall(request).execute();
                     String responseData = response.body().string();
                     parseJSONWithGSON(responseData);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initview();
-                        }
-                    });
-                    adapter.notifyDataSetChanged();
+                    if (isload) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initview();
+                            }
+                        });
+                        adapter.notifyDataSetChanged();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -100,10 +100,11 @@ public class DailyFragment extends Fragment {
     }
 
     //json转换为实体类
-    private List<DailyModel.itemEntity> parseJSONWithGSON(String jsonData) {
+    private void parseJSONWithGSON(String jsonData) {
         Gson gson = new Gson();
         DailyModel dailyModel = gson.fromJson(jsonData, DailyModel.class);
         nextUrl = dailyModel.getNextPageUrl();
+
         //itemEntities初始化
         itemEntities = dailyModel.getLists();
         //dataList初始化
@@ -111,8 +112,12 @@ public class DailyFragment extends Fragment {
             dataList.add(entity.getDataEntity());
         }
 
-        return itemEntities;
-    }
+        list1 = dailyModel.getLists();
+        for (DailyModel.itemEntity entity : list1) {
+            list2.add(entity.getDataEntity());
+        }
 
+
+    }
 
 }

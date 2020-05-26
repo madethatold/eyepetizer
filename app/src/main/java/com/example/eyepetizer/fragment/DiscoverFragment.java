@@ -41,16 +41,18 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding=FragmentDiscoverBinding.inflate(getLayoutInflater());
         downLoad(API.DISCOVER);
-        return binding.getRoot();
-    }
-
-    private void initview(){
         binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 ToastUtil.showMsg(getContext(),"test");
             }
         });
+        binding.refreshLayout.setEnableLoadMore(false);
+        return binding.getRoot();
+    }
+
+    private void initview(){
+
 
         //为recyclerView设置Adapter
         binding.rvFindMore.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
@@ -100,10 +102,6 @@ public class DiscoverFragment extends Fragment {
                 }
             }
         }
-//        Log.d(TAG, "parseJSONWithGSON: "+itemListBeanXList.get(0).getType());
-//        for (FindMoreModel.ItemListBeanX itemListBeanX:itemListBeanXList){
-//            Log.d(TAG, "parseJSONWithGSON: "+itemListBeanX.getType());
-//        }
         //dataBeanList初始化
         for (FindMoreModel.ItemListBeanX itemListBeanX:itemListBeanXList){
             dataBeanXList.add(itemListBeanX.getData());

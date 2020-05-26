@@ -23,7 +23,6 @@ import com.example.eyepetizer.model.DailyModel;
 import java.util.List;
 
 public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private String video;
     private String blurred;
     private int id;
@@ -54,7 +53,7 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle, tvTag,tvTime;
+        private TextView tvTitle, tvTag, tvTime;
         private ImageView img;
         private ImageView imgHead;
         private LinearLayout llInfo;
@@ -66,7 +65,7 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             img = itemView.ivVideoCover;
             imgHead = itemView.ivAuthor;
             llInfo = itemView.linearLayout;
-            tvTime=itemView.tvVideoTime;
+            tvTime = itemView.tvVideoTime;
         }
     }
 
@@ -106,9 +105,9 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             int minutes = entity.getContent().getData().getDuration() / 60;
             int remainingSeconds = entity.getContent().getData().getDuration() % 60;
             if (remainingSeconds < 10) {
-                ((ViewHolder)holder).tvTime.setText(minutes + ":0" + remainingSeconds);
+                ((ViewHolder) holder).tvTime.setText(minutes + ":0" + remainingSeconds);
             } else {
-                ((ViewHolder)holder).tvTime.setText(minutes + ":" + remainingSeconds);
+                ((ViewHolder) holder).tvTime.setText(minutes + ":" + remainingSeconds);
             }
 
             Glide.with(context)
@@ -179,7 +178,7 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
-    //下面两个方法提供给页面刷新和加载时调用
+//    下面两个方法提供给页面刷新和加载时调用
     public void add(List<DailyModel.itemEntity> addList1, List<DailyModel.itemEntity.DataEntity> addList2) {
         //增加数据
         int position = itemEntityList.size();
@@ -196,4 +195,5 @@ public class DailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         dataEntityList.addAll(newList2);
         notifyDataSetChanged();
     }
+
 }

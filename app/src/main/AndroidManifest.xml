@@ -16,9 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".activity.VideoDetailActivity"
-            android:launchMode="singleTop">
+        <activity android:name=".activity.WelcomeActivity">
+
         </activity>
+        <activity
+            android:name=".activity.VideoDetailActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity">
