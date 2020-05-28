@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.eyepetizer.adapter.Nominate2Adapter;
@@ -58,6 +59,13 @@ public class Nominate2Fragment extends Fragment {
     private void initview(){
         StaggeredGridLayoutManager manager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        binding.rvNominate2.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                manager.invalidateSpanAssignments();
+            }
+        });
         binding.rvNominate2.setLayoutManager(manager);
         adapter=new Nominate2Adapter(itemListBeanXList,dataBeanXList);
         binding.rvNominate2.setAdapter(adapter);

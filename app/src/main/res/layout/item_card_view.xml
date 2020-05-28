@@ -15,8 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5"
-        tools:background="@drawable/loading" />
+        app:layout_constraintWidth_percent="0.5" />
 
     <TextView
         android:id="@+id/tv_video_time"

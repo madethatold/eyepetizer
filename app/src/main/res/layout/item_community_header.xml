@@ -13,7 +13,6 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:layout_weight="1"
-        tools:background="@drawable/loading"
         android:padding="15dp"
         />
 
@@ -24,7 +23,6 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:layout_weight="1"
-        tools:background="@drawable/loading"
         android:padding="15dp"
         />
 

@@ -3,6 +3,8 @@ package com.example.eyepetizer.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.eyepetizer.activity.VideoDetailActivity;
+import com.example.eyepetizer.activity.WebDetailActivity;
 import com.example.eyepetizer.databinding.DailyListViewItemBinding;
 import com.example.eyepetizer.databinding.ItemBanner2ViewBinding;
 import com.example.eyepetizer.databinding.ItemCardViewBinding;
@@ -24,6 +28,8 @@ import com.example.eyepetizer.databinding.ItemSquareViewBinding;
 import com.example.eyepetizer.databinding.ItemTitleTagBinding;
 import com.example.eyepetizer.model.NominateModel;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 public class NominateAdapter extends RecyclerView.Adapter {
@@ -346,6 +352,21 @@ public class NominateAdapter extends RecyclerView.Adapter {
             ((Banner2Holder)holder).tvTag.setText(bean.getHeader().getDescription());
             Glide.with(context).load(bean.getImage()).into(((Banner2Holder)holder).img);
             Glide.with(context).load(bean.getHeader().getIcon()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(((Banner2Holder)holder).imgHead);
+            ((Banner2Holder)holder).img.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl=bean.getActionUrl();
+                    String str=actionUrl.substring(0, actionUrl.indexOf("url="));
+                    String CoderUrl=actionUrl.substring(str.length()+4, actionUrl.length());
+                    String url=toURLDecoder(CoderUrl);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL",url);
+                    Intent intent = new Intent(context, WebDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent,bundle);
+                }
+            });
         }
     }
 
@@ -388,5 +409,19 @@ public class NominateAdapter extends RecyclerView.Adapter {
         itemEntityList.addAll(newList1);
         dataEntityList.addAll(newList2);
         notifyDataSetChanged();
+    }
+
+    private static String toURLDecoder(String paramString) {
+        if (paramString == null || paramString.equals("")) {
+            return "";
+        }
+        try {
+            String url = new String(paramString.getBytes(), "UTF-8");
+            url = URLDecoder.decode(url, "UTF-8");
+            return url;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

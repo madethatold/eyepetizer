@@ -66,6 +66,7 @@ public class NominateModel {
             private long releaseTime;
             private int duration;
             private String image;
+            private String actionUrl;
 
             @SerializedName("header")
             private HeaderBean header;
@@ -80,6 +81,14 @@ public class NominateModel {
             @SerializedName("consumption")
             private ConsumptionBean consumption;
             private List<ItemListBeanx> itemList;
+
+            public String getActionUrl() {
+                return actionUrl;
+            }
+
+            public void setActionUrl(String actionUrl) {
+                this.actionUrl = actionUrl;
+            }
 
             public String getImage() {
                 return image;

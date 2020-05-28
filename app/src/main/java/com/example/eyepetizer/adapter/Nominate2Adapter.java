@@ -1,8 +1,8 @@
 package com.example.eyepetizer.adapter;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.example.eyepetizer.databinding.ItemCommunityCardBinding;
 import com.example.eyepetizer.databinding.ItemCommunityHeaderBinding;
 import com.example.eyepetizer.model.Nominate2Model;
-import com.example.eyepetizer.util.ToastUtil;
 
 import java.util.List;
 
@@ -83,14 +82,14 @@ public class Nominate2Adapter extends RecyclerView.Adapter {
             ((CardHolder) holder).tvName.setText(dataBeanX.getHeader().getIssuerName());
             ((CardHolder) holder).tvDescription.setText(dataBeanX.getContent().getData().getDescription());
             ((CardHolder) holder).tvStar.setText(dataBeanX.getContent().getData().getConsumption().getCollectionCount() + "");
+            ViewGroup.LayoutParams layoutParams=((CardHolder)holder).img.getLayoutParams();
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            layoutParams.width = metrics.widthPixels / 2; //瀑布流为两列
+            layoutParams.height=(int) (dataBeanX.getContent().getData().getHeight()/2.5);
+            ((CardHolder)holder).img.setLayoutParams(layoutParams);
             Glide.with(context).load(dataBeanX.getContent().getData().getCover().getFeed()).into(((CardHolder) holder).img);
             Glide.with(context).load(dataBeanX.getHeader().getIcon()).into(((CardHolder) holder).imgHeader);
-            ((CardHolder) holder).img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.showMsg(context, position + "");
-                }
-            });
+
         }
 
         if (getItemViewType(position) == HEADER) {

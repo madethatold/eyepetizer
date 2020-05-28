@@ -2,6 +2,8 @@ package com.example.eyepetizer.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.eyepetizer.activity.VideoDetailActivity;
+import com.example.eyepetizer.activity.WebDetailActivity;
 import com.example.eyepetizer.databinding.ItemBannerBinding;
 import com.example.eyepetizer.databinding.ItemBannerFindMoreBinding;
 import com.example.eyepetizer.databinding.ItemBriefTagBinding;
@@ -26,6 +30,8 @@ import com.example.eyepetizer.model.FindMoreModel;
 import com.youth.banner.Banner;
 import com.youth.banner.indicator.CircleIndicator;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 public class FindMoreAdapter extends RecyclerView.Adapter {
@@ -46,7 +52,7 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
     private String name;
     private int collect;
     private int share;
-
+    private static String TAG = "+++++++++++++++++++++++";
     private Context context;
     List<FindMoreModel.ItemListBeanX> itemListBeanXList;
     List<FindMoreModel.ItemListBeanX.DataBeanX> dataBeanXList;
@@ -59,11 +65,12 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
 
     //TITLE
     static class TitleHolder extends RecyclerView.ViewHolder {
-        private TextView tv;
+        private TextView tv, tvSub;
 
         public TitleHolder(@NonNull ItemTitleTagBinding itemView) {
             super(itemView.getRoot());
             tv = itemView.tvTitle;
+            tvSub = itemView.tvActionTitle;
         }
     }
 
@@ -184,10 +191,43 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
         FindMoreModel.ItemListBeanX.DataBeanX dataBeanX = dataBeanXList.get(position);
         if (getItemViewType(position) == TITLE) {
             ((TitleHolder) holder).tv.setText(dataBeanX.getText());
+            ((TitleHolder) holder).tvSub.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl = dataBeanX.getActionUrl();
+                    if (actionUrl.indexOf("url=") != -1) {
+                        String str = actionUrl.substring(0, actionUrl.indexOf("url="));
+                        String CoderUrl = actionUrl.substring(str.length() + 4, actionUrl.length());
+                        String url = toURLDecoder(CoderUrl);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("URL", url);
+                        Intent intent = new Intent(context, WebDetailActivity.class);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent, bundle);
+                    }
+                }
+            });
         } else if (getItemViewType(position) == BRIEF_TAG) {
             ((TAGHolder) holder).tvDescription.setText(dataBeanX.getDescription());
             ((TAGHolder) holder).tvTitle.setText(dataBeanX.getTitle());
             Glide.with(context).load(dataBeanX.getIcon()).into(((TAGHolder) holder).img);
+            ((TAGHolder)holder).img.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl = dataBeanX.getActionUrl();
+                    int index1 = actionUrl.indexOf("tag/") + 4;
+                    int index2 = actionUrl.indexOf("/?title");
+                    String id = actionUrl.substring(index1, index2);
+                    String url = "https://www.kaiyanapp.com/campaign/tag_square/tag_square.html?pageSource=tagSquare&tid=" + id;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL", url);
+                    Intent intent = new Intent(context, WebDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent,bundle);
+                }
+            });
         } else if (getItemViewType(position) == SPECIAL) {
             List<FindMoreModel.ItemListBeanX.DataBeanX.ItemListBean> beans = dataBeanX.getItemList();
             ((SpecialCardHolder) holder).tvTitle.setText(dataBeanX.getHeader().getTitle());
@@ -203,6 +243,21 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
                     .start();
         } else if (getItemViewType(position) == BANNER) {
             Glide.with(context).load(dataBeanX.getImage()).into(((BannerCardHolder) holder).img);
+            ((BannerCardHolder) holder).img.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl = dataBeanX.getActionUrl();
+                    String str = actionUrl.substring(0, actionUrl.indexOf("url="));
+                    String CoderUrl = actionUrl.substring(str.length() + 4, actionUrl.length());
+                    String url = toURLDecoder(CoderUrl);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL", url);
+                    Intent intent = new Intent(context, WebDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent, bundle);
+                }
+            });
         } else if (getItemViewType(position) == VIDEO) {
             ((VideoCardHolder) holder).tvTitle.setText(dataBeanX.getTitle());
             ((VideoCardHolder) holder).tvDesc.setText(dataBeanX.getDescription());
@@ -217,12 +272,12 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
 
             Glide.with(context).load(dataBeanX.getCover().getDetail()).into(((VideoCardHolder) holder).iv);
 
-            ((VideoCardHolder)holder).iv.setOnClickListener(new View.OnClickListener() {
+            ((VideoCardHolder) holder).iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     video = dataBeanX.getPlayUrl();
                     blurred = dataBeanX.getCover().getBlurred();
-                    id =dataBeanX.getId();
+                    id = dataBeanX.getId();
                     head = dataBeanX.getAuthor().getIcon();
                     name = dataBeanX.getAuthor().getName();
                     title = dataBeanX.getTitle();
@@ -249,6 +304,71 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
             Glide.with(context).load(dataBeanX.getItemList().get(1).getData().getImage()).into(((ColumnHolder) holder).img2);
             Glide.with(context).load(dataBeanX.getItemList().get(2).getData().getImage()).into(((ColumnHolder) holder).img3);
             Glide.with(context).load(dataBeanX.getItemList().get(3).getData().getImage()).into(((ColumnHolder) holder).img4);
+
+            ((ColumnHolder) holder).img1.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl = dataBeanX.getItemList().get(0).getData().getActionUrl();
+                    int index1 = actionUrl.indexOf("detail/") + 7;
+                    int index2 = actionUrl.indexOf("?title");
+                    String id = actionUrl.substring(index1, index2);
+                    String url = "https://www.eyepetizer.net/videos_article.html?nid=" + id;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL", url);
+                    Intent intent = new Intent(context, WebDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent,bundle);
+                }
+            });
+            ((ColumnHolder) holder).img2.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl = dataBeanX.getItemList().get(1).getData().getActionUrl();
+                    int index1 = actionUrl.indexOf("detail/") + 7;
+                    int index2 = actionUrl.indexOf("?title");
+                    String id = actionUrl.substring(index1, index2);
+                    String url = "https://www.eyepetizer.net/videos_article.html?nid=" + id;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL", url);
+                    Intent intent = new Intent(context, WebDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent, bundle);
+                }
+            });
+            ((ColumnHolder) holder).img3.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl = dataBeanX.getItemList().get(2).getData().getActionUrl();
+                    int index1 = actionUrl.indexOf("detail/") + 7;
+                    int index2 = actionUrl.indexOf("?title");
+                    String id = actionUrl.substring(index1, index2);
+                    String url = "https://www.eyepetizer.net/videos_article.html?nid=" + id;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL", url);
+                    Intent intent = new Intent(context, WebDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent, bundle);
+                }
+            });
+            ((ColumnHolder) holder).img4.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    String actionUrl = dataBeanX.getItemList().get(3).getData().getActionUrl();
+                    int index1 = actionUrl.indexOf("detail/") + 7;
+                    int index2 = actionUrl.indexOf("?title");
+                    String id = actionUrl.substring(index1, index2);
+                    String url = "https://www.eyepetizer.net/videos_article.html?nid=" + id;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL", url);
+                    Intent intent = new Intent(context, WebDetailActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent, bundle);
+                }
+            });
         }
     }
 
@@ -276,5 +396,19 @@ public class FindMoreAdapter extends RecyclerView.Adapter {
             return BRIEF_TAG;
         }
 
+    }
+
+    private static String toURLDecoder(String paramString) {
+        if (paramString == null || paramString.equals("")) {
+            return "";
+        }
+        try {
+            String url = new String(paramString.getBytes(), "UTF-8");
+            url = URLDecoder.decode(url, "UTF-8");
+            return url;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
