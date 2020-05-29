@@ -1,8 +1,10 @@
 package com.example.eyepetizer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.eyepetizer.activity.PictureDetailActivity;
 import com.example.eyepetizer.databinding.ItemCommunityCardBinding;
 import com.example.eyepetizer.databinding.ItemCommunityHeaderBinding;
 import com.example.eyepetizer.model.Nominate2Model;
@@ -82,14 +87,25 @@ public class Nominate2Adapter extends RecyclerView.Adapter {
             ((CardHolder) holder).tvName.setText(dataBeanX.getHeader().getIssuerName());
             ((CardHolder) holder).tvDescription.setText(dataBeanX.getContent().getData().getDescription());
             ((CardHolder) holder).tvStar.setText(dataBeanX.getContent().getData().getConsumption().getCollectionCount() + "");
-            ViewGroup.LayoutParams layoutParams=((CardHolder)holder).img.getLayoutParams();
+
+            ViewGroup.LayoutParams layoutParams = ((CardHolder) holder).img.getLayoutParams();
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
             layoutParams.width = metrics.widthPixels / 2; //瀑布流为两列
-            layoutParams.height=(int) (dataBeanX.getContent().getData().getHeight()/2.5);
-            ((CardHolder)holder).img.setLayoutParams(layoutParams);
-            Glide.with(context).load(dataBeanX.getContent().getData().getCover().getFeed()).into(((CardHolder) holder).img);
-            Glide.with(context).load(dataBeanX.getHeader().getIcon()).into(((CardHolder) holder).imgHeader);
+            layoutParams.height = px2dip(context,dataBeanX.getContent().getData().getHeight());
+            ((CardHolder) holder).img.setLayoutParams(layoutParams);
 
+            Glide.with(context).load(dataBeanX.getContent().getData().getCover().getFeed()).into(((CardHolder) holder).img);
+            Glide.with(context).load(dataBeanX.getHeader().getIcon()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(((CardHolder) holder).imgHeader);
+
+            ((CardHolder) holder).img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Nominate2Model.ItemListBeanX.DataBeanX.Content.DataBean bean = dataBeanX.getContent().getData();
+                    Intent intent = new Intent(context, PictureDetailActivity.class);
+                    intent.putExtra("bean", bean);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         if (getItemViewType(position) == HEADER) {
@@ -128,5 +144,10 @@ public class Nominate2Adapter extends RecyclerView.Adapter {
         itemListBeanXList.addAll(newList1);
         dataBeanXList.addAll(newList2);
         notifyDataSetChanged();
+    }
+
+    public int px2dip(Context context, float pxValue) {
+        float m = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / m + 0.5f);
     }
 }

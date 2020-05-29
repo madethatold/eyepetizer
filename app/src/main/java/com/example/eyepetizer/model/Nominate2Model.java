@@ -1,5 +1,6 @@
 package com.example.eyepetizer.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class Nominate2Model {
@@ -322,7 +323,7 @@ public class Nominate2Model {
                     this.id = id;
                 }
 
-                public static class DataBean {
+                public static class DataBean implements Serializable {
 
                     private String dataType;
                     private int id;
@@ -560,7 +561,7 @@ public class Nominate2Model {
                         this.cover = cover;
                     }
 
-                    public static class ConsumptionBean {
+                    public static class ConsumptionBean implements Serializable{
                         /**
                          * collectionCount : 98
                          * shareCount : 0
@@ -606,7 +607,7 @@ public class Nominate2Model {
                         }
                     }
 
-                    public static class OwnerBean {
+                    public static class OwnerBean implements Serializable{
                         /**
                          * uid : 301390205
                          * nickname : DH个人摄影
@@ -777,7 +778,7 @@ public class Nominate2Model {
                         }
                     }
 
-                    public static class CoverBean {
+                    public static class CoverBean implements Serializable{
                         /**
                          * feed : http://img.kaiyanapp.com/3660522038acfc2661371e1250c42886.png?imageMogr2/quality/60/format/jpg
                          * detail : http://img.kaiyanapp.com/3660522038acfc2661371e1250c42886.png?imageMogr2/quality/60/format/jpg
@@ -806,7 +807,7 @@ public class Nominate2Model {
                         }
                     }
 
-                    public static class RecentOnceReplyBean {
+                    public static class RecentOnceReplyBean implements Serializable{
                         /**
                          * dataType : SimpleHotReplyCard
                          * message : 赞
@@ -853,7 +854,7 @@ public class Nominate2Model {
                         }
                     }
 
-                    public static class TagsBean {
+                    public static class TagsBean implements Serializable{
                         /**
                          * id : 930
                          * name : 摄影师日常

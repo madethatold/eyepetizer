@@ -96,22 +96,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             break;
             case R.id.layout_notification: {
-                if (notificationFragment == null) {
-                    notificationFragment = new NotificationFragment();
+                boolean userIsLogin = (boolean) SharedPUtil.getParam(MainActivity.this,
+                        SharedPUtil.IS_LOGIN, false);
+                if(userIsLogin){
+                    if (notificationFragment == null) {
+                        notificationFragment = new NotificationFragment();
+                    }
+                    addFragment(notificationFragment);
+                    showFragment(notificationFragment);
+
+                    text_main.setTextColor(Color.BLACK);
+                    text_notification.setTextColor(Color.BLUE);
+                    text_community.setTextColor(Color.BLACK);
+                    text_me.setTextColor(Color.BLACK);
+
+                    ll_main.setBackgroundColor(Color.parseColor("#ffffff"));
+                    ll_community.setBackgroundColor(Color.parseColor("#ffffff"));
+                    ll_upload.setBackgroundColor(Color.parseColor("#ffffff"));
+                    ll_notification.setBackgroundColor(Color.parseColor("#BBBBBB"));
+                    ll_me.setBackgroundColor(Color.parseColor("#ffffff"));
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);//实例化
+                    builder.setTitle("提示").setMessage("请先登录").setCancelable(false)
+                            .setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            }).setNegativeButton("继续浏览", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ToastUtil.showMsg(MainActivity.this, "以游客模式继续浏览");
+                        }
+                    }).show();
                 }
-                addFragment(notificationFragment);
-                showFragment(notificationFragment);
 
-                text_main.setTextColor(Color.BLACK);
-                text_notification.setTextColor(Color.BLUE);
-                text_community.setTextColor(Color.BLACK);
-                text_me.setTextColor(Color.BLACK);
-
-                ll_main.setBackgroundColor(Color.parseColor("#ffffff"));
-                ll_community.setBackgroundColor(Color.parseColor("#ffffff"));
-                ll_upload.setBackgroundColor(Color.parseColor("#ffffff"));
-                ll_notification.setBackgroundColor(Color.parseColor("#BBBBBB"));
-                ll_me.setBackgroundColor(Color.parseColor("#ffffff"));
 
 
             }
