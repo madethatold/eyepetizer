@@ -85,6 +85,7 @@ public class VideoDetailActivity extends AppCompatActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 finish();
+                binding.refreshLayout.finishRefresh(100);
             }
         });
     }

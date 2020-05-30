@@ -28,11 +28,10 @@ import okhttp3.Response;
 public class FollowFragment extends Fragment {
 
     private FragmentFollowBinding binding;
-    private static String TAG="_____________________FOLLOW";
+    private static String TAG = "_____________________FOLLOW";
     private FollowAdapter adapter;
-    private List<FollowModel.ItemListBean.DataBeanX> dataBeanXList=new ArrayList<>();
+    private List<FollowModel.ItemListBean.DataBeanX> dataBeanXList = new ArrayList<>();
     private String nextPageUrl;
-
 
 
     @Nullable
@@ -51,9 +50,9 @@ public class FollowFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initview(){
+    private void initview() {
         binding.rvFollow.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        adapter=new FollowAdapter(dataBeanXList);
+        adapter = new FollowAdapter(dataBeanXList);
         binding.rvFollow.setAdapter(adapter);
     }
 
@@ -80,12 +79,12 @@ public class FollowFragment extends Fragment {
     //json转换为实体类
     private void parseJSONWithGSON(String jsonData) {
         Gson gson = new Gson();
-        FollowModel followModel=gson.fromJson(jsonData,FollowModel.class);
-        nextPageUrl=followModel.getNextPageUrl();
-        List<FollowModel.ItemListBean> list1=new ArrayList<>();
-        List<FollowModel.ItemListBean.DataBeanX> list2=new ArrayList<>();
-        list1=followModel.getItemList();
-        for(FollowModel.ItemListBean bean:list1){
+        FollowModel followModel = gson.fromJson(jsonData, FollowModel.class);
+        nextPageUrl = followModel.getNextPageUrl();
+        List<FollowModel.ItemListBean> list1 = new ArrayList<>();
+        List<FollowModel.ItemListBean.DataBeanX> list2 = new ArrayList<>();
+        list1 = followModel.getItemList();
+        for (FollowModel.ItemListBean bean : list1) {
             list2.add(bean.getData());
         }
 

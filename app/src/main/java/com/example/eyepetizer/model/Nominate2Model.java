@@ -345,6 +345,7 @@ public class Nominate2Model {
                     private boolean addWatermark;
                     private String url;
                     private long releaseTime;
+                    private String playUrl;
 
                     private ConsumptionBean consumption;
                     private RecentOnceReplyBean recentOnceReply;
@@ -352,6 +353,14 @@ public class Nominate2Model {
                     private List<String> urls;
                     private OwnerBean owner;
                     private CoverBean cover;
+
+                    public String getPlayUrl() {
+                        return playUrl;
+                    }
+
+                    public void setPlayUrl(String playUrl) {
+                        this.playUrl = playUrl;
+                    }
 
                     public String getDataType() {
                         return dataType;

@@ -99,6 +99,5 @@ public class PictureDetailActivity extends AppCompatActivity {
                 .load(bean.getOwner().getAvatar())
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(binding.header);
-
     }
 }

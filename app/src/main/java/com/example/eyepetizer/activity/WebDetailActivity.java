@@ -30,16 +30,17 @@ public class WebDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        webView = new WebView(this);
+        webView = new WebView(getApplicationContext());
         WebSettings settings = webView.getSettings();
         settings.setDomStorageEnabled(true);
+
         //解决图片加载问题
         settings.setJavaScriptEnabled(true);
         settings.setBlockNetworkImage(false);
-
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
+
         webView.setWebViewClient(new MyWebViewClient());
         binding.webFrame.addView(webView);
         String url = bundle.getString("URL");

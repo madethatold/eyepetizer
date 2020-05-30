@@ -8,7 +8,7 @@
     app:srlEnablePreviewInEditMode="true"
     app:srlPrimaryColor="#fff">
 
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+    <com.example.eyepetizer.MyHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srlAccentColor="#000"/>

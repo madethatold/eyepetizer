@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         text_community.setTextColor(Color.BLACK);
         text_me.setTextColor(Color.BLACK);
 
-        ll_main.setBackgroundColor(Color.parseColor("#BBBBBB"));
+        ll_main.setBackgroundColor(Color.parseColor("#ffffff"));
         ll_community.setBackgroundColor(Color.parseColor("#ffffff"));
         ll_upload.setBackgroundColor(Color.parseColor("#ffffff"));
         ll_notification.setBackgroundColor(Color.parseColor("#ffffff"));

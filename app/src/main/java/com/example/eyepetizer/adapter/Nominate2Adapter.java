@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.eyepetizer.activity.PictureDetailActivity;
+import com.example.eyepetizer.activity.VideoDetailActivity;
 import com.example.eyepetizer.databinding.ItemCommunityCardBinding;
 import com.example.eyepetizer.databinding.ItemCommunityHeaderBinding;
 import com.example.eyepetizer.model.Nominate2Model;
@@ -29,6 +30,17 @@ public class Nominate2Adapter extends RecyclerView.Adapter {
     private static int HEADER = 0;
     private static int CARD = 1;
     private Context context;
+
+    private String video;
+    private String blurred;
+    private int id;
+
+    private String head;
+    private String title;
+    private String desc;
+    private String name;
+    private int collect;
+    private int share;
 
     public Nominate2Adapter(List<Nominate2Model.ItemListBeanX> itemListBeanXList, List<Nominate2Model.ItemListBeanX.DataBeanX> dataBeanXList) {
         this.itemListBeanXList = itemListBeanXList;
@@ -97,15 +109,45 @@ public class Nominate2Adapter extends RecyclerView.Adapter {
             Glide.with(context).load(dataBeanX.getContent().getData().getCover().getFeed()).into(((CardHolder) holder).img);
             Glide.with(context).load(dataBeanX.getHeader().getIcon()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(((CardHolder) holder).imgHeader);
 
-            ((CardHolder) holder).img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Nominate2Model.ItemListBeanX.DataBeanX.Content.DataBean bean = dataBeanX.getContent().getData();
-                    Intent intent = new Intent(context, PictureDetailActivity.class);
-                    intent.putExtra("bean", bean);
-                    context.startActivity(intent);
-                }
-            });
+            if("video".equals(dataBeanX.getContent().getType())){
+                ((CardHolder) holder).img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        video=dataBeanX.getContent().getData().getPlayUrl();
+                        blurred="http://www.51pptmoban.com/d/file/2014/05/13/5124ee28759d3dcb61d04179ac509568.jpg";
+                        id=dataBeanX.getContent().getData().getId();
+                        head=dataBeanX.getHeader().getIcon();
+                        name=dataBeanX.getHeader().getIssuerName();
+                        title=dataBeanX.getContent().getData().getTitle();
+                        desc=dataBeanX.getContent().getData().getDescription();
+                        collect=dataBeanX.getContent().getData().getConsumption().getCollectionCount();
+                        share=dataBeanX.getContent().getData().getConsumption().getShareCount();
+
+                        Intent intent = new Intent(context, VideoDetailActivity.class);
+                        intent.putExtra("video", video);
+                        intent.putExtra("blurred", blurred);
+                        intent.putExtra("id", id);
+                        intent.putExtra("head", head);
+                        intent.putExtra("name", name);
+                        intent.putExtra("title", title);
+                        intent.putExtra("description", desc);
+                        intent.putExtra("collect", collect);
+                        intent.putExtra("share", share);
+                        context.startActivity(intent);
+                    }
+                });
+            }else {
+                ((CardHolder) holder).img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Nominate2Model.ItemListBeanX.DataBeanX.Content.DataBean bean = dataBeanX.getContent().getData();
+                        Intent intent = new Intent(context, PictureDetailActivity.class);
+                        intent.putExtra("bean", bean);
+                        context.startActivity(intent);
+                    }
+                });
+            }
+
         }
 
         if (getItemViewType(position) == HEADER) {
